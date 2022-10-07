@@ -33,7 +33,6 @@ route.get("/sign", (req, res) => {
 });
 route.post("/sign", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    console["log"](req.url);
     var account = new Account();
     account["setAll"](req.body);
     var err = false;
@@ -76,7 +75,7 @@ route.post("/sign", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     yield ctBox.getAllBoxByIdUser(validateuser.id);
     res.cookie("id", (_a = ctUser.user) === null || _a === void 0 ? void 0 : _a.id);
-    res.cookie("sercurity", validateuser.cookie);
+    res.cookie("sercurity", validateuser.cookie, { maxAge: 1000 * 60 * 60 * 24 * 356 });
     res.json({
         err: false,
         user: {
@@ -133,4 +132,29 @@ route.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function
     res.sendFile(__dirname + "/register.html");
 }));
 route.post("/createAccount", (req, res) => { });
+route.get("/logOut", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var sercurity = req.cookies;
+    console.log(req.cookies);
+    yield ctvalidateuser.DeleteValidate(sercurity.id, sercurity.sercurity)
+        .catch((v) => {
+    });
+    res.clearCookie("id");
+    res.clearCookie("sercurity");
+    res.redirect("/account/sign");
+}));
+route.get("/logOutAll", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var sercurity = req.cookies;
+    console.log(req.cookies);
+    var validatedate = yield ctvalidateuser.GetValidateUser(sercurity.id, sercurity.sercurity);
+    if (!validatedate) {
+        res.json("ok");
+        return;
+    }
+    yield ctvalidateuser.DeleteValidateAll(sercurity.id)
+        .catch((v) => {
+    });
+    res.clearCookie("id");
+    res.clearCookie("sercurity");
+    res.redirect("/account/sign");
+}));
 export default route;

@@ -1,5 +1,5 @@
 import { postRegister, result } from "../../confi.js";
-import { GetkUserDatabase, InsertNewUserDB } from "../database/DBUser.js";
+import { GetkUserDatabase, InsertNewUserDB, ListUserByNameDB } from "../database/DBUser.js";
 import User from "../model/User.js";
 
 export default class ControllerUser{
@@ -50,5 +50,26 @@ export default class ControllerUser{
         this.rt.result=[]
         this.listUser=[]
         this.user=undefined
+    }
+    private SetlistUser(rt:any){
+        this.reFresh()
+        for (let i = 0; i < rt.length; i++) {
+            const element = rt[i];
+            this.user =new User()
+            this.user.setAll(element)
+           this.listUser.push(this.user);
+        }
+    }
+    async SearchListUserByName(idUser:string,name:string){
+        await ListUserByNameDB(idUser,name)
+        .catch((v)=>{
+            this.reFresh()
+            console.log(v);
+            
+        })
+        .then((v)=>{
+            this.SetlistUser(v)
+        })
+        return this.listUser
     }
 }

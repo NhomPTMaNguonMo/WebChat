@@ -1,4 +1,5 @@
-import { InsertValidateuserBD, UpdateValidateuserBD } from "../database/DBvalidateuser.js";
+import { DeleteValidateAllDB, DeleteValidateDB, GetValidateUserBD, InsertValidateuserBD, UpdateValidateuserBD } from "../database/DBvalidateuser.js";
+
 import validateuser from "../model/Validateuser.js";
 
 export default class CTvalidateuser{
@@ -27,5 +28,41 @@ export default class CTvalidateuser{
             rt=false
         })
         return rt;
-    } 
+    }
+    async DeleteValidate (id:string,sercurity:string) {
+        var rt:boolean=true
+        await DeleteValidateDB(id,sercurity)
+        .catch((v)=>{
+            console.log(v)
+            rt=false
+        })
+        return rt;
+    }
+    async DeleteValidateAll (id:string) {
+        var rt:boolean=true
+        
+        await DeleteValidateAllDB(id)
+        .catch((v)=>{
+            console.log(v)
+            rt=false
+        })
+        return rt;
+    }
+    async GetValidateUser (id:string,cookie:string) {
+        var rt:any=[]
+        var validatedate:validateuser|undefined =undefined;
+        await GetValidateUserBD(id,cookie)
+        .then((v)=>{
+            rt=v;
+        })
+        .catch((v)=>{
+            validatedate=undefined;
+        })
+        for (let i = 0; i < rt.length; i++) {
+            const element = rt[i];
+            validatedate=new validateuser()
+            validatedate.setAll(element);
+        }
+        return validatedate;
+    }
 }

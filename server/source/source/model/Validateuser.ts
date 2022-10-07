@@ -14,10 +14,10 @@ export default class Validateuser{
         this.status=1
     }
     public setAll(p:any){
-        this.cookie=p.cookie
-        this.id=p.id
-        this.socket=p.socket
-        this.status=p.status
+        this.cookie=p.cookie?p.cookie:""
+        this.id=p.id?p.id:""
+        this.socket=p.socket?p.socket:""
+        this.status=p.status?p.status:""
     }
     public Json(){
         return {

@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import __dirname from "../../font/init.js";
-import { hash, postRegister, UnknownObject, UnknownString, validatedate, validateEmail } from "../confi.js";
+import __dirname from "../font/init.js";
+import { hash, postRegister, sercurity, UnknownObject, validatedate, validateEmail } from "../confi.js";
 import Account from "../source/model/Account.js";
 import Validateuser from "../source/model/Validateuser.js";
 
@@ -29,7 +29,6 @@ route.get("/sign", (req: Request, res: Response) => {
   res.sendFile(__dirname + "/sign.html");
 });
 route.post("/sign", async (req: Request, res: Response) => {
-  console["log"](req.url);
   var account = new Account();
   account["setAll"](req.body);
   var err: boolean = false;
@@ -77,7 +76,7 @@ route.post("/sign", async (req: Request, res: Response) => {
   }
   await ctBox.getAllBoxByIdUser(validateuser.id);
   res.cookie("id", ctUser.user?.id);
-  res.cookie("sercurity", validateuser.cookie);
+  res.cookie("sercurity", validateuser.cookie,{maxAge:1000*60*60*24*356});
   res.json({
     err: false,
     user: {
@@ -98,7 +97,7 @@ route.post("/register", async (req: Request, res: Response) => {
   var err: boolean = false;
   if (!validatedate(body.day, body.month, body.year)) {
     res.json({ err: true, mess: "sai ngày tháng" });
-    return;
+    return ;
   }
   // if (!validateEmail(body.account)) {
   //   res.json({ err: true, mess: "sai email" });
@@ -136,5 +135,32 @@ route.post("/register", async (req: Request, res: Response) => {
   res.sendFile(__dirname + "/register.html");
 });
 route.post("/createAccount", (req: Request, res: Response) => {});
+route.get("/logOut",async (req:Request,res:Response)=>{
+  var sercurity:sercurity=req.cookies;
+  console.log(req.cookies);
+  
+  await ctvalidateuser.DeleteValidate(sercurity.id,sercurity.sercurity)
+  .catch((v)=>{
 
+  })
+  res.clearCookie("id");
+  res.clearCookie("sercurity")
+  res.redirect("/account/sign");
+})
+route.get("/logOutAll",async (req:Request,res:Response)=>{
+  var sercurity:sercurity=req.cookies;
+  console.log(req.cookies);
+  var validatedate:Validateuser|undefined = await ctvalidateuser.GetValidateUser(sercurity.id,sercurity.sercurity)
+  if (!validatedate) {
+    res.json("ok")
+    return;
+  }
+  await ctvalidateuser.DeleteValidateAll(sercurity.id)
+  .catch((v)=>{
+    
+  })
+  res.clearCookie("id");
+  res.clearCookie("sercurity")
+  res.redirect("/account/sign");
+})
 export default route;

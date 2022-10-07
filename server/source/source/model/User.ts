@@ -1,3 +1,5 @@
+import { formatDate } from "../../confi.js"
+
 enum sex{
     nu=0,
     nam
@@ -20,12 +22,15 @@ export default class User{
         this.sex=""
     }
     setAll(d:any){
-        this.id=d.id
-        this.accout=d.account
-        this.nameUser=d.nameUser
-        this.status=d.status
+       
+        this.id=d.id?d.id:""
+        this.accout=d.account?d.account:""
+        this.nameUser=d.nameUser?d.nameUser:""
+        this.status=d.status?d.status:""
         this.avatar=d.avatar?d.avatar:"anh"
-        this.birthday=d.birthday
-        this.sex=d.sex
+        this.birthday=d.birthday?formatDate(d.birthday):""
+        this.sex=d.sex?d.sex:0
+
+        
     }
 }

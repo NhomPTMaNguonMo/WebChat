@@ -100,3 +100,12 @@ export function UnknownObject(p:any){
  }
  return false
 }
+export interface sercurity{
+  id:string,
+  sercurity:string
+}
+
+export function formatDate(d:string){
+  var date=new Date(d)
+ return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
+}

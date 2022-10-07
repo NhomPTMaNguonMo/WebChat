@@ -7,13 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    .c:hover {
+        color: red;
+    }
+</style>
 
 <body>
-    <form action="./sign" method="post">
+    <a href="/account/register" class="c">đăng ký</a><br> <br>
+    <form action="/account/sign" method="post">
         <input type="text" name="account" placeholder="Tài Khoản" autocomplete="false" type="email">
         <input type="password" placeholder="Mật Khẩu" name="password" id="">
         <input type="submit" id="">
     </form>
+
 </body>
 
 </html>
