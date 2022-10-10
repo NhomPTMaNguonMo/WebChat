@@ -1,6 +1,6 @@
 import User from "./User.js";
 
-export default class HaveListFriends extends User{
+export default class AddFriendRequest extends User{
     constructor(){
         super()
     }

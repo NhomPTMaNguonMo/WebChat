@@ -7,10 +7,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { InAddFriendRequestDB } from "../database/DBAddFriendReques.js";
+import { InAddFriendRequestDB, InsertAddFriendRequestDB, ListAddFriendRequestDB, } from "../database/DBAddFriendReques.js";
+import AddFriendRequest from "../model/AddFriendRequest.js";
 export default class CTAddFriendReques {
     constructor() {
         this.addFriendsList = [];
+    }
+    refesh() {
+        this.addFriendsList = [];
+    }
+    setList(s) {
+        console.log(s);
+        this.refesh();
+        let addFriendRequest;
+        for (let i = 0; i < s.length; i++) {
+            const element = s[i];
+            addFriendRequest = new AddFriendRequest();
+            addFriendRequest.setAll(element);
+            this.addFriendsList.push(addFriendRequest);
+        }
     }
     InAddFriendRequest(idUser, idAddFriends) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -35,7 +50,7 @@ export default class CTAddFriendReques {
     InsertAddFriendRequest(idUser, idAddFriends) {
         return __awaiter(this, void 0, void 0, function* () {
             var check = false;
-            yield InAddFriendRequestDB(idUser, idAddFriends)
+            yield InsertAddFriendRequestDB(idUser, idAddFriends)
                 .then((v) => {
                 check = true;
             })
@@ -43,6 +58,14 @@ export default class CTAddFriendReques {
                 check = false;
             });
             return check;
+        });
+    }
+    ListAddFriendRequest(idUser) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var s;
+            s = yield ListAddFriendRequestDB(idUser);
+            this.setList(s);
+            return this.addFriendsList;
         });
     }
 }

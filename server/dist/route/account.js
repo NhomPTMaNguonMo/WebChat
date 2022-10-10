@@ -32,7 +32,6 @@ route.get("/sign", (req, res) => {
     res.sendFile(__dirname + "/sign.html");
 });
 route.post("/sign", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     var account = new Account();
     account["setAll"](req.body);
     var err = false;
@@ -74,7 +73,7 @@ route.post("/sign", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         return;
     }
     yield ctBox.getAllBoxByIdUser(validateuser.id);
-    res.cookie("id", (_a = ctUser.user) === null || _a === void 0 ? void 0 : _a.id);
+    res.cookie("id", ctUser.user.id, { maxAge: 1000 * 60 * 60 * 24 * 356 });
     res.cookie("sercurity", validateuser.cookie, { maxAge: 1000 * 60 * 60 * 24 * 356 });
     res.json({
         err: false,

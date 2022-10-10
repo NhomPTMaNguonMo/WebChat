@@ -31,7 +31,7 @@ export default class CTHaveListFriends {
         this.HaveListFriends = [];
       })
       .then((v) => {
-        console.log(v);
+        
         this.SetHaveListFriends(v);
       });
     return this.HaveListFriends;

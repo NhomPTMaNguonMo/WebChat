@@ -11,6 +11,7 @@ import express from "express";
 import CTAddFriendReques from "../source/controller/CTAddFriendReques.js";
 import CTHaveListFriends from "../source/controller/CThaveLsitFriend.js";
 import CTUsers from "../source/controller/CtUsers.js";
+import io from "../server.js";
 var cthaveLsitFriend = new CTHaveListFriends();
 var ctAddFriendReques = new CTAddFriendReques();
 var ctUser = new CTUsers();
@@ -27,7 +28,6 @@ routeFriends.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
 routeFriends.post("/search", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var nameUser = req.body.name;
     var s = req.cookies;
-    console.log(nameUser);
     var listUser = [];
     var haveListFriends = [];
     yield Promise.all([
@@ -69,6 +69,14 @@ routeFriends.post("/addFriends", (req, res) => __awaiter(void 0, void 0, void 0,
         return;
     }
     yield ctAddFriendReques.InsertAddFriendRequest(s.id, idFriend);
-    res.json({ err: false });
+    io.emit("ReqAddFriends", "data");
+    res.end();
+}));
+routeFriends.post("/listAddFriendRequest", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var s = req.cookies;
+    var list = yield ctAddFriendReques.ListAddFriendRequest(s.id);
+    res.json({
+        list: list
+    });
 }));
 export default routeFriends;

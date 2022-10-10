@@ -5,4 +5,5 @@ export default class Box {
     avatar: string;
     constructor();
     setAll(p: any): void;
+    json(): any;
 }

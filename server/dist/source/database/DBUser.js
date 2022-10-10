@@ -41,8 +41,8 @@ export function ListUserByNameDB(idUser, name) {
             if (e) {
                 rej(e);
             }
-            var sql = "SELECT u.id,u.nameUser,u.avatar,u.birthday,u.sex FROM user u WHERE u.nameUser LIKE ? and u.id NOT IN (SELECT h.idFriends FROM havelistfriends h WHERE h.idUser = ?) ";
-            con.query(sql, [`%${name}%`, idUser], (e, rt, fi) => {
+            var sql = "SELECT u.id,u.nameUser,u.avatar,u.birthday,u.sex FROM user u WHERE u.nameUser LIKE ? and u.id NOT IN (SELECT h.idFriends FROM havelistfriends h WHERE h.idUser = ?) AND u.id <> ?";
+            con.query(sql, [`%${name}%`, idUser, idUser], (e, rt, fi) => {
                 if (e) {
                     rej(e);
                 }

@@ -6,9 +6,18 @@ export default class Box {
         this.avatar = "";
     }
     setAll(p) {
-        this.idBox = p.idBox;
-        this.idUser = p.idUser;
-        this.nameUser = p.nameUser;
-        this.avatar = p.avatar;
+        for (const key in this) {
+            this[key] = p[key];
+        }
+    }
+    json() {
+        var s = {};
+        for (const key in this) {
+            const element = this[key];
+            if (element) {
+                s[key] = element;
+            }
+        }
+        return s;
     }
 }

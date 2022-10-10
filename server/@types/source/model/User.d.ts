@@ -5,7 +5,8 @@ export default class User {
     status: number;
     avatar: string;
     sex: string;
-    birthday: string;
+    birthday: string | undefined;
     constructor();
     setAll(d: any): void;
+    json(): any;
 }

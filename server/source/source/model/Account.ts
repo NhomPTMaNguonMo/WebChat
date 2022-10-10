@@ -1,13 +1,13 @@
 export default class Account{
-   private account:string
-   private password:string
+    account:string
+    password:string
     constructor(){
         this.account="",
         this.password=""
     }
     public setAll(d:any){
-        this.account=d.account?d.account:""
-        this.password=d.password?d.password:""
+        this.account=d.account?d.account:undefined
+        this.password=d.password?d.password:undefined
         return this
     }
     public getAccount() : string {
@@ -22,5 +22,17 @@ export default class Account{
     }
     public setPassord(v : string) {
         this.password = v;
+    }
+    public json(){
+        var s:any = {}
+        for (const key in this) {
+            if (Object.hasOwnProperty.call(this, key)) {
+                const element = this[key];
+                if (element) {
+                    s[key] = this[key]
+                }
+
+            }
+        }
     }
 }

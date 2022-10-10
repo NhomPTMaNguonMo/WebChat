@@ -50,4 +50,11 @@ server.listen(port, () => {
     console.log(`http://localhost:${port}/`);
 });
 io.on("connection", (socket) => {
+    console.log(socket.id);
+    socket.on("disconnect", () => __awaiter(void 0, void 0, void 0, function* () {
+        console.log(socket.id);
+        const sockets = yield io.in(socket.id).fetchSockets();
+        socket.disconnect();
+    }));
 });
+export default io;

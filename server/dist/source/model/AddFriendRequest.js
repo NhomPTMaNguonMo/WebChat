@@ -1,5 +1,5 @@
-import User from "./User";
-export default class AddFriendReques extends User {
+import User from "./User.js";
+export default class AddFriendRequest extends User {
     constructor() {
         super();
     }

@@ -4,8 +4,8 @@ export default class Account {
             this.password = "";
     }
     setAll(d) {
-        this.account = d.account ? d.account : "";
-        this.password = d.password ? d.password : "";
+        this.account = d.account ? d.account : undefined;
+        this.password = d.password ? d.password : undefined;
         return this;
     }
     getAccount() {
@@ -19,5 +19,16 @@ export default class Account {
     }
     setPassord(v) {
         this.password = v;
+    }
+    json() {
+        var s = {};
+        for (const key in this) {
+            if (Object.hasOwnProperty.call(this, key)) {
+                const element = this[key];
+                if (element) {
+                    s[key] = this[key];
+                }
+            }
+        }
     }
 }

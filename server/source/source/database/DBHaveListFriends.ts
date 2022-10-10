@@ -44,7 +44,7 @@ export function SearchFirendsByNameDB(iduser:string,name:string) {
                 error(err)
             }
             let query=`SELECT * FROM user u, havelistfriends h WHERE h.idUser = ? and h.idFriends = u.id AND u.nameUser LIKE ?`
-            con.query(query,[iduser,`%${name}%`],(err,rt,fiels)=>{
+            con.query(query,[iduser,`%${name}%`,iduser],(err,rt,fiels)=>{
                 if (err) {
                     error(err)
                 }

@@ -14,6 +14,7 @@ import CTHaveListFriends from "../source/controller/CThaveLsitFriend.js";
 import CTUsers from "../source/controller/CtUsers.js";
 import HaveListFriends from "../source/model/HaveListFriends.js";
 import User from "../source/model/User.js";
+import io from "../server.js";
 
 var cthaveLsitFriend = new CTHaveListFriends();
 var ctAddFriendReques = new CTAddFriendReques();
@@ -32,7 +33,7 @@ routeFriends.get("/", async (req: Request, res: Response) => {
 routeFriends.post("/search", async (req: Request, res: Response) => {
   var nameUser = req.body.name;
   var s: sercurity = req.cookies;
-  console.log(nameUser);
+  
   var listUser: User[] = [];
   var haveListFriends: HaveListFriends[] = [];
 
@@ -74,6 +75,14 @@ routeFriends.post("/addFriends", async (req: Request, res: Response) => {
     return;
   }
   await ctAddFriendReques.InsertAddFriendRequest(s.id,idFriend)
-  res.json({err:false})
+  io.emit("ReqAddFriends","data")
+  res.end()
 });
+routeFriends.post("/listAddFriendRequest",async(req:Request,res:Response)=>{
+  var s: sercurity = req.cookies;
+  var list = await ctAddFriendReques.ListAddFriendRequest(s.id);
+  res.json({
+    list:list
+  })
+})
 export default routeFriends;

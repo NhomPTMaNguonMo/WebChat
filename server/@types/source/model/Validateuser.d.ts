@@ -9,11 +9,6 @@ export default class Validateuser {
     status: status;
     constructor();
     setAll(p: any): void;
-    Json(): {
-        id: string;
-        cookie: string;
-        socket: string;
-        status: status;
-    };
+    Json(): any;
 }
 export {};

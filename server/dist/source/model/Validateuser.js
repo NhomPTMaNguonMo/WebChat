@@ -11,17 +11,18 @@ export default class Validateuser {
         this.status = 1;
     }
     setAll(p) {
-        this.cookie = p.cookie ? p.cookie : "";
-        this.id = p.id ? p.id : "";
-        this.socket = p.socket ? p.socket : "";
-        this.status = p.status ? p.status : "";
+        for (const key in this) {
+            this[key] = p[key];
+        }
     }
     Json() {
-        return {
-            id: this.id,
-            cookie: this.cookie,
-            socket: this.socket,
-            status: this.status
-        };
+        var s = {};
+        for (const key in this) {
+            const element = this[key];
+            if (element) {
+                s[key] = element;
+            }
+        }
+        return s;
     }
 }

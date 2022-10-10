@@ -1,4 +1,6 @@
 import { createHash } from "crypto";
+import mysql from "mysql";
+
 export interface sign {
   account: string;
   password: string;
@@ -109,3 +111,5 @@ export function formatDate(d:string){
   var date=new Date(d)
  return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
 }
+
+
