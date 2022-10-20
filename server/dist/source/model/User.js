@@ -1,3 +1,4 @@
+import { formatDate } from "../../confi.js";
 var sex;
 (function (sex) {
     sex[sex["nu"] = 0] = "nu";
@@ -25,6 +26,9 @@ export default class User {
             if (element) {
                 s[key] = element;
             }
+        }
+        if (s["birthday"]) {
+            s["birthday"] = formatDate(s["birthday"]);
         }
         return s;
     }

@@ -7,4 +7,6 @@ export default class CTAddFriendReques {
     InAddFriendRequest(idUser: string, idAddFriends: string): Promise<boolean>;
     InsertAddFriendRequest(idUser: string, idAddFriends: string): Promise<boolean>;
     ListAddFriendRequest(idUser: string): Promise<AddFriendRequest[]>;
+    CancelingFriendRequest(idFriendRequest: string, idUser: string): Promise<boolean>;
+    ListSentFriendRequest(idUser: string): Promise<AddFriendRequest[]>;
 }

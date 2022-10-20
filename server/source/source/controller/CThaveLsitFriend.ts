@@ -3,6 +3,8 @@ import {
   GetHaveListFriendsByIdUserDB,
   SearchFirendsByIdDB,
   SearchFirendsByNameDB,
+  insertListFriendsDB,
+  CancelFriendsDB,
 } from "../database/DBHaveListFriends.js";
 import HaveListFriends from "../model/HaveListFriends.js";
 
@@ -21,7 +23,7 @@ export default class CTHaveListFriends {
       const element = rt[i];
       havelistfriends = new HaveListFriends();
       havelistfriends.setAll(element);
-      this.HaveListFriends.push(havelistfriends);
+      this.HaveListFriends.push(havelistfriends.json());
     }
   }
   async GetHaveListFriendsByIdUser(idUser: string) {
@@ -31,7 +33,6 @@ export default class CTHaveListFriends {
         this.HaveListFriends = [];
       })
       .then((v) => {
-        
         this.SetHaveListFriends(v);
       });
     return this.HaveListFriends;
@@ -47,7 +48,6 @@ export default class CTHaveListFriends {
       });
     return this.HaveListFriends;
   }
-
   async SearchFirendsByName(iduser: string, name: string) {
     await SearchFirendsByNameDB(iduser, name)
       .catch((v) => {
@@ -59,7 +59,7 @@ export default class CTHaveListFriends {
       });
     return this.HaveListFriends;
   }
-  async InFriendInList(idUser: string, idFriend: string) {
+  async IsFriendInList(idUser: string, idFriend: string) {
     var check: boolean = false;
     await IsFriendInListDB(idUser, idFriend)
       .then((v) => {
@@ -71,9 +71,32 @@ export default class CTHaveListFriends {
         }
       })
       .catch((v) => {
-        check=true
+        check = true;
         console.log(v);
       });
-      return check
+    return check;
+  }
+  async insertListFriends(idUser: string, idFriend: string) {
+    var s = false;
+    await insertListFriendsDB(idUser, idFriend)
+      .catch((v) => {
+        console.log(v);
+      })
+      .then((v) => {
+        s = true;
+      });
+    return s;
+  }
+  async  CancelFriends(idUser:string,idFriend:string) {
+    var s=true
+    await CancelFriendsDB(idUser,idFriend)
+    .catch((v)=>{
+      s=false
+      console.log(v)
+    })
+    .then((v)=>{
+      s=true
+    })
+    return s
   }
 }

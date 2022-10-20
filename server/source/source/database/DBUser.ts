@@ -56,3 +56,22 @@ export function ListUserByNameDB(idUser:string,name:string) {
         })
     })
 }
+export function GetUserByIdDB(idUser:string){
+    return new Promise((res,rej)=>{
+        var con =mysql.createConnection(confi)
+        con.connect((e)=>{
+            if (e) {
+                rej(e)
+            }
+            var sql ="SELECT id,nameUser,avatar,birthday,sex FROM user WHERE id= ?"
+                
+            con.query(sql,idUser,(e,rt,fi)=>{
+                if (e) {
+                    rej(e)
+                }
+               
+                res(rt);
+            })
+        })
+    })
+}

@@ -51,3 +51,20 @@ export function ListUserByNameDB(idUser, name) {
         });
     });
 }
+export function GetUserByIdDB(idUser) {
+    return new Promise((res, rej) => {
+        var con = mysql.createConnection(confi);
+        con.connect((e) => {
+            if (e) {
+                rej(e);
+            }
+            var sql = "SELECT id,nameUser,avatar,birthday,sex FROM user WHERE id= ?";
+            con.query(sql, idUser, (e, rt, fi) => {
+                if (e) {
+                    rej(e);
+                }
+                res(rt);
+            });
+        });
+    });
+}

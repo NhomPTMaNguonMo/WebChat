@@ -34,6 +34,9 @@ export default class User {
         s[key] = element;
       }
     }
+    if (s["birthday"]) {
+      s["birthday"]=formatDate(s["birthday"])
+    }
     return s;
   }
 }

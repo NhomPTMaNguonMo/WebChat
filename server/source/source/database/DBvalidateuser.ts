@@ -19,15 +19,15 @@ export function InsertValidateuserBD(p:validateuser) {
         })
     })
 }
-export function UpdateValidateuserBD(id:string,socket:string,status:number) {
+export function UpdateStatusInValidateuserBD(id:string,status:number) {
     return new Promise((res,err)=>{
         let con=mysql.createConnection(confi);
         con.connect((e)=>{
             if (e) {
                 err(e)
             }
-            let sql="UPDATE `validateuser` SET `socket`=?,`status`=? WHERE id=?"
-            con.query(sql,[socket,status,id],(e,rt,fiels)=>{
+            let sql="UPDATE `validateuser` SET `status`=? WHERE id=?"
+            con.query(sql,[status,id],(e,rt,fiels)=>{
                 if (e) {
                     err(e)
                 }

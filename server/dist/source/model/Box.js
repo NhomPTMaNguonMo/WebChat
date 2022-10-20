@@ -4,6 +4,7 @@ export default class Box {
         this.idUser = "";
         this.nameUser = "";
         this.avatar = "";
+        this.status = "";
     }
     setAll(p) {
         for (const key in this) {

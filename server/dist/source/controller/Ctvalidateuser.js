@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { DeleteValidateAllDB, DeleteValidateDB, GetValidateUserBD, InsertValidateuserBD, UpdateValidateuserBD } from "../database/DBvalidateuser.js";
+import { DeleteValidateAllDB, DeleteValidateDB, GetValidateUserBD, InsertValidateuserBD, UpdateStatusInValidateuserBD, } from "../database/DBvalidateuser.js";
 import validateuser from "../model/Validateuser.js";
 export default class CTvalidateuser {
     constructor() {
@@ -27,11 +27,10 @@ export default class CTvalidateuser {
             return rt;
         });
     }
-    UpdateValidateuser(id, socket, status) {
+    UpdateStatusInValidateuser(id, status) {
         return __awaiter(this, void 0, void 0, function* () {
             var rt = true;
-            yield UpdateValidateuserBD(id, socket, status)
-                .catch((v) => {
+            yield UpdateStatusInValidateuserBD(id, status).catch((v) => {
                 console.log(v);
                 rt = false;
             });
@@ -41,8 +40,7 @@ export default class CTvalidateuser {
     DeleteValidate(id, sercurity) {
         return __awaiter(this, void 0, void 0, function* () {
             var rt = true;
-            yield DeleteValidateDB(id, sercurity)
-                .catch((v) => {
+            yield DeleteValidateDB(id, sercurity).catch((v) => {
                 console.log(v);
                 rt = false;
             });
@@ -52,8 +50,7 @@ export default class CTvalidateuser {
     DeleteValidateAll(id) {
         return __awaiter(this, void 0, void 0, function* () {
             var rt = true;
-            yield DeleteValidateAllDB(id)
-                .catch((v) => {
+            yield DeleteValidateAllDB(id).catch((v) => {
                 console.log(v);
                 rt = false;
             });

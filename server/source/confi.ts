@@ -1,10 +1,19 @@
 import { createHash } from "crypto";
-import mysql from "mysql";
 
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { Socket } from "socket.io";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export default __dirname
 export interface sign {
   account: string;
   password: string;
 }
+
+
 
 export const confi = {
   host: "localhost",
@@ -106,7 +115,11 @@ export interface sercurity{
   id:string,
   sercurity:string
 }
-
+export interface content{
+  
+  idBox:string,
+  content:string
+}
 export function formatDate(d:string){
   var date=new Date(d)
  return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`

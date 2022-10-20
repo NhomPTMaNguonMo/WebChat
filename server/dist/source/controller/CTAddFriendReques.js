@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { InAddFriendRequestDB, InsertAddFriendRequestDB, ListAddFriendRequestDB, } from "../database/DBAddFriendReques.js";
+import { CancelingFriendRequestDB, InAddFriendRequestDB, InsertAddFriendRequestDB, ListAddFriendRequestDB, ListSentFriendRequestDB, } from "../database/DBAddFriendReques.js";
 import AddFriendRequest from "../model/AddFriendRequest.js";
 export default class CTAddFriendReques {
     constructor() {
@@ -17,14 +17,13 @@ export default class CTAddFriendReques {
         this.addFriendsList = [];
     }
     setList(s) {
-        console.log(s);
         this.refesh();
         let addFriendRequest;
         for (let i = 0; i < s.length; i++) {
             const element = s[i];
             addFriendRequest = new AddFriendRequest();
             addFriendRequest.setAll(element);
-            this.addFriendsList.push(addFriendRequest);
+            this.addFriendsList.push(addFriendRequest.json());
         }
     }
     InAddFriendRequest(idUser, idAddFriends) {
@@ -65,6 +64,32 @@ export default class CTAddFriendReques {
             var s;
             s = yield ListAddFriendRequestDB(idUser);
             this.setList(s);
+            return this.addFriendsList;
+        });
+    }
+    CancelingFriendRequest(idFriendRequest, idUser) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var s = false;
+            yield CancelingFriendRequestDB(idFriendRequest, idUser)
+                .then((v) => {
+                s = true;
+            })
+                .catch((v) => {
+                console.log(v);
+                s = false;
+            });
+            return s;
+        });
+    }
+    ListSentFriendRequest(idUser) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield ListSentFriendRequestDB(idUser)
+                .then((v) => {
+                this.setList(v);
+            })
+                .catch((v) => {
+                console.log(v);
+            });
             return this.addFriendsList;
         });
     }

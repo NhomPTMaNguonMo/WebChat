@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import __dirname from "../font/init.js";
+import __dirname from "../confi.js";
 import { hash, postRegister, sercurity, UnknownObject, validatedate, validateEmail } from "../confi.js";
 import Account from "../source/model/Account.js";
 import Validateuser from "../source/model/Validateuser.js";
@@ -8,7 +8,7 @@ import ControllerUser from "../source/controller/CtUsers.js";
 import CTvalidateuser from "../source/controller/Ctvalidateuser.js";
 import CTBox from "../source/controller/CTBox.js";
 import CTAccout from "../source/controller/CtAccout.js";
-import User from "../source/model/User.js";
+
 
 var ctAccout = new CTAccout();
 var ctUser = new ControllerUser();
@@ -26,7 +26,7 @@ route.use((req,res,next)=>{
 })
 
 route.get("/sign", (req: Request, res: Response) => {
-  res.sendFile(__dirname + "/sign.html");
+  res.sendFile(__dirname + "/font/sign.html");
 });
 route.post("/sign", async (req: Request, res: Response) => {
   var account = new Account();
@@ -75,8 +75,8 @@ route.post("/sign", async (req: Request, res: Response) => {
     return;
   }
   await ctBox.getAllBoxByIdUser(validateuser.id);
-  res.cookie("id", ctUser.user.id,{maxAge:1000*60*60*24*356});
-  res.cookie("sercurity", validateuser.cookie,{maxAge:1000*60*60*24*356});
+  res.cookie("id", ctUser.user.id,{maxAge:1000*60*60*24*356,domain:"localhost"});
+  res.cookie("sercurity", validateuser.cookie,{maxAge:1000*60*60*24*356,domain:"localhost"});
   res.json({
     err: false,
     user: {

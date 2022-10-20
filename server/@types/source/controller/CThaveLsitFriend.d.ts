@@ -7,5 +7,7 @@ export default class CTHaveListFriends {
     GetHaveListFriendsByIdUser(idUser: string): Promise<HaveListFriends[]>;
     SearchFirendsById(id: string): Promise<HaveListFriends[]>;
     SearchFirendsByName(iduser: string, name: string): Promise<HaveListFriends[]>;
-    InFriendInList(idUser: string, idFriend: string): Promise<boolean>;
+    IsFriendInList(idUser: string, idFriend: string): Promise<boolean>;
+    insertListFriends(idUser: string, idFriend: string): Promise<boolean>;
+    CancelFriends(idUser: string, idFriend: string): Promise<boolean>;
 }

@@ -10,4 +10,5 @@ export default class ControllerUser {
     private reFresh;
     private SetlistUser;
     SearchListUserByName(idUser: string, name: string): Promise<User[]>;
+    GetUserById(idUser: string): Promise<User | undefined>;
 }

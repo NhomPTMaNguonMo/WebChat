@@ -71,3 +71,38 @@ export function IsFriendInListDB(idUser:string,idFriend:string){
         })
     })
 }
+export function insertListFriendsDB(idUser:string,idFriend:string) {
+    return new Promise((res,error)=>{
+        let con=mysql.createConnection(confi)
+        con.connect((err)=>{
+            if (err) {
+                error(err)
+            }
+            let query=`INSERT INTO havelistfriends(idUser, idFriends) VALUES (?,?)`
+            con.query(query,[idUser,idFriend],(err,rt,fiels)=>{
+                if (err) {
+                    error(err)
+                }
+                res(rt);
+            })
+        })
+    })
+}
+
+export function CancelFriendsDB(idUser:string,idFriend:string){
+    return new Promise((res,error)=>{
+        let con=mysql.createConnection(confi)
+        con.connect((err)=>{
+            if (err) {
+                error(err)
+            }
+            let query=`DELETE FROM havelistfriends WHERE idUser = ? AND idFriends = ?`
+            con.query(query,[idUser,idFriend],(err,rt,fiels)=>{
+                if (err) {
+                    error(err)
+                }
+                res(rt);
+            })
+        })
+    })
+}

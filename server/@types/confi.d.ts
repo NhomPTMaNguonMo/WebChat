@@ -1,3 +1,5 @@
+declare const __dirname: string;
+export default __dirname;
 export interface sign {
     account: string;
     password: string;
@@ -39,5 +41,9 @@ export declare function UnknownObject(p: any): boolean;
 export interface sercurity {
     id: string;
     sercurity: string;
+}
+export interface content {
+    idBox: string;
+    content: string;
 }
 export declare function formatDate(d: string): string;

@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from "express";
-import __dirname from "../font/init.js";
+import __dirname from "../confi.js";
 import { hash, UnknownObject, validatedate } from "../confi.js";
 import Account from "../source/model/Account.js";
 import Validateuser from "../source/model/Validateuser.js";
@@ -29,7 +29,7 @@ route.use((req, res, next) => {
     next();
 });
 route.get("/sign", (req, res) => {
-    res.sendFile(__dirname + "/sign.html");
+    res.sendFile(__dirname + "/font/sign.html");
 });
 route.post("/sign", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var account = new Account();
@@ -73,8 +73,8 @@ route.post("/sign", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         return;
     }
     yield ctBox.getAllBoxByIdUser(validateuser.id);
-    res.cookie("id", ctUser.user.id, { maxAge: 1000 * 60 * 60 * 24 * 356 });
-    res.cookie("sercurity", validateuser.cookie, { maxAge: 1000 * 60 * 60 * 24 * 356 });
+    res.cookie("id", ctUser.user.id, { maxAge: 1000 * 60 * 60 * 24 * 356, domain: "localhost" });
+    res.cookie("sercurity", validateuser.cookie, { maxAge: 1000 * 60 * 60 * 24 * 356, domain: "localhost" });
     res.json({
         err: false,
         user: {

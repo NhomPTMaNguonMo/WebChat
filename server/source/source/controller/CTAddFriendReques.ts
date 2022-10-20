@@ -1,7 +1,9 @@
 import {
+  CancelingFriendRequestDB,
   InAddFriendRequestDB,
   InsertAddFriendRequestDB,
   ListAddFriendRequestDB,
+  ListSentFriendRequestDB,
 } from "../database/DBAddFriendReques.js";
 import AddFriendRequest from "../model/AddFriendRequest.js";
 
@@ -14,14 +16,13 @@ export default class CTAddFriendReques {
     this.addFriendsList = [];
   }
   private setList(s: any) {
-    console.log(s);
     this.refesh();
     let addFriendRequest: AddFriendRequest;
     for (let i = 0; i < s.length; i++) {
       const element = s[i];
       addFriendRequest = new AddFriendRequest();
       addFriendRequest.setAll(element);
-      this.addFriendsList.push(addFriendRequest);
+      this.addFriendsList.push(addFriendRequest.json());
     }
   }
   async InAddFriendRequest(idUser: string, idAddFriends: string) {
@@ -57,5 +58,27 @@ export default class CTAddFriendReques {
     s = await ListAddFriendRequestDB(idUser);
     this.setList(s);
     return this.addFriendsList;
+  }
+  async CancelingFriendRequest(idFriendRequest:string,idUser:string) {
+    var s = false
+    await CancelingFriendRequestDB(idFriendRequest,idUser)
+    .then((v)=>{
+      s=true
+    })
+    .catch((v)=>{
+      console.log(v)
+      s=false
+    })
+    return s
+  }
+  async ListSentFriendRequest(idUser:string){
+    await ListSentFriendRequestDB(idUser)
+    .then((v:any)=>{
+      this.setList(v)
+    })
+    .catch((v)=>{
+      console.log(v)
+    })
+    return this.addFriendsList
   }
 }

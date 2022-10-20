@@ -55,3 +55,40 @@ export async function ListAddFriendRequestDB(idUser:string) {
     });
   });
 }
+
+export async function CancelingFriendRequestDB(idFriendRequest:string,idUser:string) {
+  return new Promise((res, error) => {
+    var con = mysql.createConnection(confi);
+    con.connect((err) => {
+      if (err) {
+        error(err);
+      }
+      var sql ="DELETE FROM listaddfriends WHERE listaddfriends.idUser=? AND listaddfriends.idAddFriends=?";
+      con.query(sql,[idFriendRequest,idUser], (e, ru, field) => {
+        if (e) {
+          error(e);
+        }
+        res(ru);
+      });
+    });
+  });
+}
+
+
+export async function ListSentFriendRequestDB(idUser:string) {
+  return new Promise((res, error) => {
+    var con = mysql.createConnection(confi);
+    con.connect((err) => {
+      if (err) {
+        error(err);
+      }
+      var sql ="SELECT u.nameUser, u.id,u.avatar,u.sex FROM listaddfriends l, user u WHERE l.idUser=1 AND u.id=l.idAddFriends";
+      con.query(sql,idUser, (e, ru, field) => {
+        if (e) {
+          error(e);
+        }
+        res(ru);
+      });
+    });
+  });
+}

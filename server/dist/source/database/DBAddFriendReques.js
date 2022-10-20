@@ -62,3 +62,41 @@ export function ListAddFriendRequestDB(idUser) {
         });
     });
 }
+export function CancelingFriendRequestDB(idFriendRequest, idUser) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((res, error) => {
+            var con = mysql.createConnection(confi);
+            con.connect((err) => {
+                if (err) {
+                    error(err);
+                }
+                var sql = "DELETE FROM listaddfriends WHERE listaddfriends.idUser=? AND listaddfriends.idAddFriends=?";
+                con.query(sql, [idFriendRequest, idUser], (e, ru, field) => {
+                    if (e) {
+                        error(e);
+                    }
+                    res(ru);
+                });
+            });
+        });
+    });
+}
+export function ListSentFriendRequestDB(idUser) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((res, error) => {
+            var con = mysql.createConnection(confi);
+            con.connect((err) => {
+                if (err) {
+                    error(err);
+                }
+                var sql = "SELECT u.nameUser, u.id,u.avatar,u.sex FROM listaddfriends l, user u WHERE l.idUser=1 AND u.id=l.idAddFriends";
+                con.query(sql, idUser, (e, ru, field) => {
+                    if (e) {
+                        error(e);
+                    }
+                    res(ru);
+                });
+            });
+        });
+    });
+}
