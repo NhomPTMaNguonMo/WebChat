@@ -35,7 +35,7 @@ export default class CTMessage {
   async InsertContentIn(idBox: string, idUser: string, mess: string) {
     await InsertContentInDB(idBox, idUser, mess)
       .then((v) => {
-        console.log(v);
+        
       })
       .catch((v) => {
         console.log(v);

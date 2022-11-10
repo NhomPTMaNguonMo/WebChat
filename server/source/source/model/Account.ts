@@ -28,7 +28,7 @@ export default class Account{
         for (const key in this) {
             if (Object.hasOwnProperty.call(this, key)) {
                 const element = this[key];
-                if (element) {
+                if (element!=undefined) {
                     s[key] = this[key]
                 }
 

@@ -1,7 +1,7 @@
 export default class Box {
     constructor() {
         this.idBox = "";
-        this.idUser = "";
+        this.idUser = 0;
         this.nameUser = "";
         this.avatar = "";
         this.status = "";
@@ -15,10 +15,11 @@ export default class Box {
         var s = {};
         for (const key in this) {
             const element = this[key];
-            if (element) {
+            if (element != undefined) {
                 s[key] = element;
             }
         }
         return s;
     }
 }
+//# sourceMappingURL=Box.js.map

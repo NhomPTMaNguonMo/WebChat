@@ -2,13 +2,13 @@ import { UpdateBoxTypeDB } from "../database/DBBox.js"
 
 export default class Box{
     idBox:string
-    idUser:string
+    idUser:number
     nameUser:string
     avatar:string
     status:string
     constructor(){
         this.idBox=""
-        this.idUser=""
+        this.idUser=0
         this.nameUser=""
         this.avatar=""
         this.status=""
@@ -23,7 +23,7 @@ export default class Box{
         var s:any={}
         for (const key in this) {
             const element=this[key]
-            if (element) {
+            if (element!=undefined) {
                 s[key]=element
             }
         }

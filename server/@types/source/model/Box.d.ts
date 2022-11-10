@@ -1,6 +1,6 @@
 export default class Box {
     idBox: string;
-    idUser: string;
+    idUser: number;
     nameUser: string;
     avatar: string;
     status: string;

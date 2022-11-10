@@ -44,6 +44,12 @@ routeBox.post("/chat", async (req: Request, res: Response) => {
     res.json({err:true,mess:"bạn ko thể chat cho mình"})
     return
   }
+  let user:User|undefined=await ctUer.GetUserById(idFriend)
+  if (!user) {
+    res.json({err:true,mess:"không có người này"})
+    return
+  }
+  
   let box:Box
   var li:Box[]=await ctHavelistboxchat.GetIdBoxbyIdUserAndIdFriend(s.id,idFriend);
   if (li.length>0) {
@@ -56,11 +62,7 @@ routeBox.post("/chat", async (req: Request, res: Response) => {
     return
   }
   
-  let user:User|undefined=await ctUer.GetUserById(idFriend)
-  if (!user) {
-    res.json({err:true,mess:"không có người này"})
-    return
-  }
+  
 
 
   await ctBox.insertNewBox()

@@ -38,3 +38,4 @@ export function InsertAccountDB(p) {
         });
     });
 }
+//# sourceMappingURL=DBAccount.js.map

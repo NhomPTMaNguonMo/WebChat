@@ -85,3 +85,4 @@ export function DeleteValidateAllDB(id) {
         });
     });
 }
+//# sourceMappingURL=DBvalidateuser.js.map

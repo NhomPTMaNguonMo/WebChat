@@ -38,3 +38,4 @@ export function InsertContentInDB(idBox, idUser, mess) {
         });
     });
 }
+//# sourceMappingURL=DBMessage.js.map

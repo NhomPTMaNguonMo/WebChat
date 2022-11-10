@@ -22,13 +22,17 @@ export default class message {
         var s = {};
         for (const key in this) {
             const element = this[key];
-            if (element) {
+            if (element != undefined) {
                 s[key] = element;
             }
         }
         if (s["ngay"]) {
             s["ngay"] = formatDate(s["ngay"]);
         }
+        if (this.type == typeMess.content) {
+            s["type"] == 0;
+        }
         return s;
     }
 }
+//# sourceMappingURL=message.js.map

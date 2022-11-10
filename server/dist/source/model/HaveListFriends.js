@@ -10,3 +10,4 @@ export default class HaveListFriends extends User {
         super.setAll(d);
     }
 }
+//# sourceMappingURL=HaveListFriends.js.map

@@ -1,4 +1,4 @@
-import { postRegister, result } from "../../confi.js";
+import { result } from "../../confi.js";
 import User from "../model/User.js";
 export default class ControllerUser {
     rt: result;
@@ -6,7 +6,7 @@ export default class ControllerUser {
     listUser: User[];
     constructor();
     GetUser(account: string): Promise<User | undefined>;
-    InsertNewUser(p: postRegister): Promise<boolean>;
+    InsertNewUser(p: User): Promise<boolean>;
     private reFresh;
     private SetlistUser;
     SearchListUserByName(idUser: string, name: string): Promise<User[]>;

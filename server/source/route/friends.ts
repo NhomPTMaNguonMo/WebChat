@@ -35,12 +35,7 @@ routeFriends.post("/", async (req: Request, res: Response) => {
   });
 });
 routeFriends.post("/search", async (req: Request, res: Response) => {
-  req.on("data", (data) => {
-    console.log("trong");
-    console.log(data.toString("utf8"));
-  });
   var nameUser = req.body.name;
-  console.log(nameUser);
   var s: sercurity = req.cookies;
 
   var listUser: User[] = [];

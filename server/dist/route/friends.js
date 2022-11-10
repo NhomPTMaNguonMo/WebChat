@@ -30,12 +30,7 @@ routeFriends.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function*
     });
 }));
 routeFriends.post("/search", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    req.on("data", (data) => {
-        console.log("trong");
-        console.log(data.toString("utf8"));
-    });
     var nameUser = req.body.name;
-    console.log(nameUser);
     var s = req.cookies;
     var listUser = [];
     var haveListFriends = [];
@@ -143,3 +138,4 @@ routeFriends.post("/sentFriendRequest", (req, res) => __awaiter(void 0, void 0, 
     res.json({ err: false, list: listAddFriendRequest });
 }));
 export default routeFriends;
+//# sourceMappingURL=friends.js.map

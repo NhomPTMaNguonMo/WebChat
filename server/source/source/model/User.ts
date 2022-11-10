@@ -5,16 +5,16 @@ enum sex {
   nam,
 }
 export default class User {
-  id: string;
-  accout: string;
+  id: number;
+  account: string;
   nameUser: string;
   status: number;
   avatar: string;
   sex: string;
   birthday: string | undefined;
   constructor() {
-    this.id = "";
-    this.accout = "";
+    this.id = 0;
+    this.account = "";
     this.nameUser = "";
     this.status = 0;
     this.avatar = "anh";
@@ -23,19 +23,27 @@ export default class User {
   }
   setAll(d: any) {
     for (const key in this) {
-      this[key] = d[key];
+      if (d[key] != undefined) {
+        this[key] = d[key];
+      }
+    }
+    if (d.year != undefined) {
+      this.birthday= `${d.year}-${d.month}-${d.day}`
     }
   }
   json() {
     var s: any = {};
     for (const key in this) {
       const element = this[key];
-      if (element) {
+      if (element != undefined) {
         s[key] = element;
       }
     }
+    s["account"]=undefined
     if (s["birthday"]) {
-      s["birthday"]=formatDate(s["birthday"])
+      s["birthday"] = formatDate(s["birthday"]);
+    }else{
+      s["birthday"]=undefined
     }
     return s;
   }
