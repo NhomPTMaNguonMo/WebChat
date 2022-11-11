@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { GetAccoutDatabase, InsertAccountDB } from "../database/DBAccount.js";
+import { GetAccoutDatabase, InsertAccountDB, UpdatePasswordDB } from "../database/DBAccount.js";
 import Account from "../model/Account.js";
 export default class ctAccout {
     constructor() {
@@ -51,6 +51,19 @@ export default class ctAccout {
     Refesh() {
         this.listAccount = [];
         this.account = undefined;
+    }
+    UpdatePassword(account, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var check = true;
+            yield UpdatePasswordDB(account, password)
+                .then((v) => {
+            })
+                .catch((v) => {
+                console.log(v);
+                check = false;
+            });
+            return check;
+        });
     }
 }
 //# sourceMappingURL=CtAccout.js.map

@@ -19,7 +19,6 @@ import CTAccout from "../source/controller/CtAccout.js";
 import CTtemporaryuser from "../source/controller/CTtemporaryuser.js";
 import GamiAPI from "../gmail.js";
 import temporaryuser from "../source/model/temporaryuser.js";
-import User from "../source/model/User.js";
 var ctAccout = new CTAccout();
 var ctUser = new ControllerUser();
 var ctvalidateuser = new CTvalidateuser();
@@ -106,41 +105,6 @@ route.get("/register", (req, res) => {
 });
 route.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var body = req.body;
-    var err = false;
-    if (!validatedate(body.day, body.month, body.year)) {
-        res.json({ err: true, mess: "sai ngày tháng" });
-        return;
-    }
-    // if (!validateEmail(body.account)) {
-    //   res.json({ err: true, mess: "sai email" });
-    //   return;
-    // }
-    var user = yield ctUser.GetUser(body.account);
-    if (user) {
-        res.json({ err: true, mess: "Tài khoản đã tồn tại" });
-        return;
-    }
-    var account = new Account();
-    account.setAll(body);
-    user = new User();
-    user.setAll(body);
-    yield Promise.all([
-        ctAccout.InsertAccount(account),
-        ctUser.InsertNewUser(user),
-    ]).catch((err) => {
-        err = true;
-    });
-    if (err) {
-        res.end();
-        return;
-    }
-    res.sendFile(__dirname + "/register.html");
-}));
-route.get("/registerNew", (req, res) => {
-    res.sendFile(__dirname + "/font/registerNew.html");
-});
-route.post("/registerNew", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var body = req.body;
     yield gamiAPI.loadAll();
     if (!validatedate(body.day, body.month, body.year)) {
         res.json({ err: true, mess: "sai ngày tháng" });
@@ -162,8 +126,7 @@ route.post("/registerNew", (req, res) => __awaiter(void 0, void 0, void 0, funct
         return;
     }
     var url = `http://localhost:666/account/ValidateAcc/${body.account}/${tem.valiCode}`;
-    yield gamiAPI.contentGmail(body.account, url)
-        .catch((v) => {
+    yield gamiAPI.contentGmail(body.account, url).catch((v) => {
         console.log(v);
         return;
     });
@@ -204,13 +167,11 @@ route.get("/ValidateAcc/:acc/:vali", (req, res) => __awaiter(void 0, void 0, voi
     var account = new Account();
     account.setAll(s);
     var err = false;
-    yield ctAccout.InsertAccount(account)
-        .catch((v) => {
+    yield ctAccout.InsertAccount(account).catch((v) => {
         console.log(v);
         err = true;
     });
-    yield ctUser.InsertNewUser(s)
-        .catch((v) => {
+    yield ctUser.InsertNewUser(s).catch((v) => {
         console.log(v);
         err = true;
     });
@@ -221,9 +182,8 @@ route.get("/ValidateAcc/:acc/:vali", (req, res) => __awaiter(void 0, void 0, voi
     }
     res.sendFile(__dirname + "/font/sign.html");
 }));
-route.get("/createCodeToForgetAccout", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+route.get("/createCodeToChangeAccout", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var account = req.query.account;
-    console.log(account);
     if (!account) {
         res.end();
         return;
@@ -233,7 +193,9 @@ route.get("/createCodeToForgetAccout", (req, res) => __awaiter(void 0, void 0, v
         return;
     }
     if (cttemporaryuser.getTemporaryuser(account) != undefined) {
-        res.status(302).json({ mess: "hãy kiểm tra gmail để thực hiện chức năng đổi mật khẩu" });
+        res
+            .status(302)
+            .json({ mess: "hãy kiểm tra gmail để thực hiện chức năng đổi mật khẩu" });
         return;
     }
     var s = yield ctUser.GetUser(account);
@@ -259,6 +221,29 @@ route.get("/createCodeToForgetAccout", (req, res) => __awaiter(void 0, void 0, v
     cttemporaryuser.InsertNew(tempuser);
     res.json({ mess: "hãy kiểm tra gmail của bạn" });
 }));
-route.post("/");
+route.get("/ForgetAccout/:account/:validateCode", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var account = req.params.account;
+    if (cttemporaryuser.getTemporaryuser(account) == undefined) {
+        res.sendFile(__dirname + "/font/sign.html");
+        return;
+    }
+    res.sendFile(__dirname + "/font/changeForgetingAccount.html");
+}));
+route.post("/ForgetAccout", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var account = req.body.account;
+    var valiCode = req.body.validateCode;
+    var password1 = req.body.password;
+    var tempuser = cttemporaryuser.getTemporaryuser(account);
+    if (tempuser == undefined) {
+        res.status(404).json({ mess: "mã kích hoạt đã hết hạn" });
+        return;
+    }
+    if (tempuser.valiCode !== valiCode) {
+        res.status(404).json({ mess: "sai mã kích hoạt" });
+        return;
+    }
+    var s = yield ctAccout.UpdatePassword(account, password1);
+    res.json({ mess: "đổi thành công" });
+}));
 export default route;
 //# sourceMappingURL=account.js.map

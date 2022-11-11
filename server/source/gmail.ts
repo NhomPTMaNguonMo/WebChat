@@ -65,7 +65,7 @@ export default class GamiAPI {
     this.client_secret = "";
     this.refresh_token = "";
     this.AccessToken = "";
-    this.loadAll();
+   
   }
 
   loadToken() {

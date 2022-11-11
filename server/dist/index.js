@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import fs from "fs";
 import path from "path";
-import process from "process";
 import { authenticate } from "@google-cloud/local-auth";
 import { google } from "googleapis";
+import __dirname from "./confi.js";
 // If modifying these scopes, delete token.json.
 const SCOPES = [
     "https://mail.google.com/",
@@ -21,8 +21,9 @@ const SCOPES = [
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = path.join(process.cwd(), 'token.json');
-const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json');
+const TOKEN_PATH = path.join(__dirname, '/../token.json');
+const CREDENTIALS_PATH = path.join(__dirname, '/../credentials.json');
+console.log(CREDENTIALS_PATH);
 /**
  * Serializes credentials to a file comptible with GoogleAUth.fromJSON.
  *

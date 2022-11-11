@@ -38,4 +38,23 @@ export function InsertAccountDB(p) {
         });
     });
 }
+export function UpdatePasswordDB(account, password) {
+    return new Promise((res, error) => {
+        var con = mysql.createConnection(confi);
+        con.connect((err) => {
+            if (err) {
+                error(err);
+            }
+            var sql = `UPDATE account SET password = ? WHERE account = ?`;
+            con.query(sql, [password, account], (e, ru, field) => {
+                if (e) {
+                    error(e);
+                }
+                else {
+                    res(ru);
+                }
+            });
+        });
+    });
+}
 //# sourceMappingURL=DBAccount.js.map
