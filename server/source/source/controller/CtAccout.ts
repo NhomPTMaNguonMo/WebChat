@@ -1,5 +1,5 @@
 import { result } from "../../confi.js";
-import { GetAccoutDatabase,InsertAccountDB, UpdatePasswordDB} from "../database/DBAccount.js"
+import { GetAccoutByIdDB, GetAccoutDatabase,InsertAccountDB, UpdatePasswordDB} from "../database/DBAccount.js"
 import Account from "../model/Account.js";
 
 export default class ctAccout{
@@ -55,5 +55,26 @@ export default class ctAccout{
             check=false
         })
         return check
+    }
+    setlistAccount(s:any){
+        this.Refesh()
+        this.account
+        for (let i = 0; i < s.length; i++) {
+            const element = s[i];
+            
+        }
+    }
+    async GetAccoutById(id:string){
+       
+        await GetAccoutByIdDB(id)
+        .then((v)=>{
+            this.account=new Account()
+            this.account.setAll(v)
+        })
+        .catch((v)=>{
+            console.log(v);
+            this.account=undefined
+        })
+        return this.account
     }
 }

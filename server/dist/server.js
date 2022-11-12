@@ -32,7 +32,7 @@ const io = new Server(server, {});
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
-function Vali(req, res, next) {
+export function Vali(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         if (validate(req)) {
             next();
@@ -47,10 +47,10 @@ function Vali(req, res, next) {
         var date = new Date();
         sercurity.ab = hash(sercurity.sercurity + date.getTime(), 25);
         res.cookie("time", date.getTime(), {
-            httpOnly: true
+            httpOnly: true,
         });
         res.cookie("ab", sercurity.ab, {
-            httpOnly: true
+            httpOnly: true,
         });
         next();
     });

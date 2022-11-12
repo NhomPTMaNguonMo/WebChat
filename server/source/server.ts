@@ -30,8 +30,10 @@ const io = new Server(server, {});
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
-
-async function Vali(req: Request, res: Response, next: NextFunction) {
+app.use((req,res)=>{
+  res.setHeader("access-control-allow-origin","*");
+})
+export async function Vali(req: Request, res: Response, next: NextFunction) {
   if (validate(req)) {
     next();
     return;
@@ -48,10 +50,10 @@ async function Vali(req: Request, res: Response, next: NextFunction) {
   var date = new Date();
   sercurity.ab = hash(sercurity.sercurity + date.getTime(), 25);
   res.cookie("time", date.getTime(), {
-    httpOnly: true
+    httpOnly: true,
   });
   res.cookie("ab", sercurity.ab, {
-    httpOnly: true
+    httpOnly: true,
   });
 
   next();
@@ -88,6 +90,8 @@ app.use("/box", Vali, routeBox);
 app.use("/mess", Vali, routeMess);
 
 server.listen(port, () => {
+  
+
   console.log(`http://localhost:${port}`);
 });
 io.on("connection", async (socket) => {

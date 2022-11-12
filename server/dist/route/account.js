@@ -19,6 +19,7 @@ import CTAccout from "../source/controller/CtAccout.js";
 import CTtemporaryuser from "../source/controller/CTtemporaryuser.js";
 import GamiAPI from "../gmail.js";
 import temporaryuser from "../source/model/temporaryuser.js";
+import io, { Vali } from "../server.js";
 var ctAccout = new CTAccout();
 var ctUser = new ControllerUser();
 var ctvalidateuser = new CTvalidateuser();
@@ -77,7 +78,6 @@ route.post("/sign", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     yield ctBox.getAllBoxByIdUser(validateuser.id + "");
     res.cookie("time", validateuser.time, {
         httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24,
     });
     res.cookie("id", ctUser.user.id, {
         maxAge: 1000 * 60 * 60 * 24 * 356,
@@ -87,6 +87,7 @@ route.post("/sign", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     });
     res.cookie("sercurity", validateuser.cookie, {
         httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 356
     });
     res.json({
         err: false,
@@ -141,6 +142,8 @@ route.get("/logOut", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         .catch((v) => { });
     res.clearCookie("id");
     res.clearCookie("sercurity");
+    res.clearCookie("ab");
+    res.clearCookie("time");
     res.redirect("/account/sign");
 }));
 route.get("/logOutAll", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -155,6 +158,7 @@ route.get("/logOutAll", (req, res) => __awaiter(void 0, void 0, void 0, function
     res.clearCookie("id");
     res.clearCookie("sercurity");
     res.clearCookie("ab");
+    res.clearCookie("time");
     res.redirect("/account/sign");
 }));
 route.get("/ValidateAcc/:acc/:vali", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -182,7 +186,8 @@ route.get("/ValidateAcc/:acc/:vali", (req, res) => __awaiter(void 0, void 0, voi
     }
     res.sendFile(__dirname + "/font/sign.html");
 }));
-route.get("/createCodeToChangeAccout", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+route.post("/createCodeToChangeAccout", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body.account);
     var account = req.query.account;
     if (!account) {
         res.end();
@@ -244,6 +249,31 @@ route.post("/ForgetAccout", (req, res) => __awaiter(void 0, void 0, void 0, func
     }
     var s = yield ctAccout.UpdatePassword(account, password1);
     res.json({ mess: "đổi thành công" });
+}));
+route.post("/Change", Vali, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var sercurity = req.cookies;
+    var passwordNow = req.body.passwordNow;
+    var password1 = req.body.password1;
+    var password2 = req.body.password2;
+    var account = yield ctAccout.GetAccoutById(sercurity.id);
+    if (password1 !== password2) {
+        res.status(400).json({ mess: "mật khẩu không trùng nhau" });
+        return;
+    }
+    if (account == undefined) {
+        res.status(400).send({ mess: "tài khoản không tồn tại" });
+        return;
+    }
+    if (account.getPassword() == passwordNow) {
+        res.status(400).send({ mess: "mật khẩu hiện tại không đúng" });
+        return;
+    }
+    yield ctAccout.UpdatePassword(account.getPassword(), password1);
+    io.to(req.cookies.id).emit("out");
+    res.clearCookie("id");
+    res.clearCookie("sercurity");
+    res.clearCookie("ab");
+    res.status(200).json({ mess: "thành công" });
 }));
 export default route;
 //# sourceMappingURL=account.js.map

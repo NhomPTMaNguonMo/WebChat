@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { GetAccoutDatabase, InsertAccountDB, UpdatePasswordDB } from "../database/DBAccount.js";
+import { GetAccoutByIdDB, GetAccoutDatabase, InsertAccountDB, UpdatePasswordDB } from "../database/DBAccount.js";
 import Account from "../model/Account.js";
 export default class ctAccout {
     constructor() {
@@ -63,6 +63,27 @@ export default class ctAccout {
                 check = false;
             });
             return check;
+        });
+    }
+    setlistAccount(s) {
+        this.Refesh();
+        this.account;
+        for (let i = 0; i < s.length; i++) {
+            const element = s[i];
+        }
+    }
+    GetAccoutById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield GetAccoutByIdDB(id)
+                .then((v) => {
+                this.account = new Account();
+                this.account.setAll(v);
+            })
+                .catch((v) => {
+                console.log(v);
+                this.account = undefined;
+            });
+            return this.account;
         });
     }
 }

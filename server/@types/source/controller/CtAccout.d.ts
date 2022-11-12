@@ -9,4 +9,6 @@ export default class ctAccout {
     InsertAccount(s: Account): Promise<result>;
     private Refesh;
     UpdatePassword(account: string, password: string): Promise<boolean>;
+    setlistAccount(s: any): void;
+    GetAccoutById(id: string): Promise<Account | undefined>;
 }

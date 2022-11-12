@@ -10,7 +10,6 @@ import {
 } from "../confi.js";
 import Account from "../source/model/Account.js";
 import Validateuser from "../source/model/Validateuser.js";
-
 import ControllerUser from "../source/controller/CtUsers.js";
 import CTvalidateuser from "../source/controller/Ctvalidateuser.js";
 import CTBox from "../source/controller/CTBox.js";
@@ -18,6 +17,8 @@ import CTAccout from "../source/controller/CtAccout.js";
 import CTtemporaryuser from "../source/controller/CTtemporaryuser.js";
 import GamiAPI from "../gmail.js";
 import temporaryuser from "../source/model/temporaryuser.js";
+import io, { Vali } from "../server.js";
+
 var ctAccout = new CTAccout();
 var ctUser = new ControllerUser();
 var ctvalidateuser = new CTvalidateuser();
@@ -85,7 +86,6 @@ route.post("/sign", async (req: Request, res: Response) => {
   await ctBox.getAllBoxByIdUser(validateuser.id + "");
   res.cookie("time", validateuser.time, {
     httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24,
   });
   res.cookie("id", ctUser.user.id, {
     maxAge: 1000 * 60 * 60 * 24 * 356,
@@ -95,6 +95,7 @@ route.post("/sign", async (req: Request, res: Response) => {
   });
   res.cookie("sercurity", validateuser.cookie, {
     httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 356
   });
   res.json({
     err: false,
@@ -152,8 +153,10 @@ route.get("/logOut", async (req: Request, res: Response) => {
   await ctvalidateuser
     .DeleteValidate(sercurity.id, sercurity.sercurity)
     .catch((v) => {});
-  res.clearCookie("id");
-  res.clearCookie("sercurity");
+    res.clearCookie("id");
+    res.clearCookie("sercurity");
+    res.clearCookie("ab");
+    res.clearCookie("time");
   res.redirect("/account/sign");
 });
 route.get("/logOutAll", async (req: Request, res: Response) => {
@@ -169,6 +172,7 @@ route.get("/logOutAll", async (req: Request, res: Response) => {
   res.clearCookie("id");
   res.clearCookie("sercurity");
   res.clearCookie("ab");
+  res.clearCookie("time");
   res.redirect("/account/sign");
 });
 route.get("/ValidateAcc/:acc/:vali", async (req: Request, res: Response) => {
@@ -199,7 +203,9 @@ route.get("/ValidateAcc/:acc/:vali", async (req: Request, res: Response) => {
 
   res.sendFile(__dirname + "/font/sign.html");
 });
-route.get("/createCodeToChangeAccout", async (req, res) => {
+route.post("/createCodeToChangeAccout", async (req, res) => {
+  console.log(req.body.account);
+  
   var account: string | undefined | any = req.query.account;
   if (!account) {
     res.end();
@@ -266,5 +272,29 @@ route.post("/ForgetAccout", async (req, res) => {
   var s= await ctAccout.UpdatePassword(account,password1)
   res.json({mess:"đổi thành công"});
 });
-
+route.post("/Change",Vali,async(req,res)=>{
+  var sercurity:sercurity=req.cookies;
+  var passwordNow=req.body.passwordNow;
+  var password1=req.body.password1;
+  var password2=req.body.password2;
+  var account=await ctAccout.GetAccoutById(sercurity.id);
+  if (password1!==password2) {
+    res.status(400).json({mess:"mật khẩu không trùng nhau"});
+    return
+  }
+  if (account ==undefined) {
+    res.status(400).send({mess:"tài khoản không tồn tại"});
+    return
+  }
+  if (account.getPassword() ==passwordNow) {
+    res.status(400).send({mess:"mật khẩu hiện tại không đúng"});
+    return
+  }
+  await ctAccout.UpdatePassword(account.getPassword(),password1);
+  io.to(req.cookies.id).emit("out");
+  res.clearCookie("id");
+  res.clearCookie("sercurity");
+  res.clearCookie("ab");
+  res.status(200).json({mess:"thành công"});
+})
 export default route;
