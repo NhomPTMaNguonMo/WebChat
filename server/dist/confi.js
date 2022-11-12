@@ -8,7 +8,7 @@ export const confi = {
     host: "localhost",
     user: "root",
     password: "",
-    database: "zalo",
+    database: "zalo2",
 };
 export function hash(params) {
     return createHash("md5").update(params, "utf-8").digest("base64");
