@@ -7,30 +7,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getAllBoxByIdInBD } from "../database/DBBox.js";
+import { getAllBoxByIdInBD, GetEmptyBoxDB, insertNewBoxDB, UpdateBoxTypeDB } from "../database/DBBox.js";
 import Box from "../model/Box.js";
-export default class DBBox {
+var type;
+(function (type) {
+    type["noFriend"] = "0";
+    type["Friend"] = "1";
+})(type || (type = {}));
+export default class CTBox {
     constructor() {
         this.lsBox = [];
+    }
+    gettype() {
+        return type;
     }
     Refesh() {
         this.lsBox = [];
     }
     getAllBoxByIdUser(idUser) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.Refesh();
             yield getAllBoxByIdInBD(idUser)
                 .catch((v) => {
                 console.log(v);
             })
                 .then((v) => {
-                console.log(v);
                 this.setlsBox(v);
             });
             return true;
         });
     }
+    insertNewBox() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield insertNewBoxDB()
+                .catch((v) => {
+                console.log(v);
+            });
+            return true;
+        });
+    }
     setlsBox(any) {
+        this.Refesh();
         this.lsBox = [];
         let box;
         for (let i = 0; i < any.length; i++) {
@@ -40,4 +56,23 @@ export default class DBBox {
             this.lsBox.push(box);
         }
     }
+    UpdateBoxType(idBox, type) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield UpdateBoxTypeDB(idBox, type)
+                .catch((v) => {
+                console.log(v);
+            });
+            return true;
+        });
+    }
+    GetEmptyBox() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield GetEmptyBoxDB()
+                .then((v) => {
+                this.setlsBox(v);
+            });
+            return this.lsBox;
+        });
+    }
 }
+//# sourceMappingURL=CTBox.js.map

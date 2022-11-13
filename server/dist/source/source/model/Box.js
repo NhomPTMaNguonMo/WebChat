@@ -1,14 +1,25 @@
 export default class Box {
     constructor() {
         this.idBox = "";
-        this.idUser = "";
+        this.idUser = 0;
         this.nameUser = "";
         this.avatar = "";
+        this.status = "";
     }
     setAll(p) {
-        this.idBox = p.idBox;
-        this.idUser = p.idUser;
-        this.nameUser = p.nameUser;
-        this.avatar = p.avatar;
+        for (const key in this) {
+            this[key] = p[key];
+        }
+    }
+    json() {
+        var s = {};
+        for (const key in this) {
+            const element = this[key];
+            if (element != undefined) {
+                s[key] = element;
+            }
+        }
+        return s;
     }
 }
+//# sourceMappingURL=Box.js.map

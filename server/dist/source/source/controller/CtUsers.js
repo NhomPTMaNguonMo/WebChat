@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { GetkUserDatabase, InsertNewUserDB, ListUserByNameDB } from "../database/DBUser.js";
+import { GetkUserDatabase, GetUserByIdDB, InsertNewUserDB, ListUserByNameDB } from "../database/DBUser.js";
 import User from "../model/User.js";
 export default class ControllerUser {
     constructor() {
@@ -40,11 +40,8 @@ export default class ControllerUser {
     }
     InsertNewUser(p) {
         return __awaiter(this, void 0, void 0, function* () {
-            let user = new User();
             var err = false;
-            user.setAll(p);
-            user.birthday = `${p.year}-${p.month}-${p.day}`;
-            yield InsertNewUserDB(user)
+            yield InsertNewUserDB(p)
                 .catch((v) => {
                 err = true;
                 console.log(v);
@@ -64,7 +61,7 @@ export default class ControllerUser {
             const element = rt[i];
             this.user = new User();
             this.user.setAll(element);
-            this.listUser.push(this.user);
+            this.listUser.push(this.user.json());
         }
     }
     SearchListUserByName(idUser, name) {
@@ -80,4 +77,22 @@ export default class ControllerUser {
             return this.listUser;
         });
     }
+    GetUserById(idUser) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.reFresh();
+            yield GetUserByIdDB(idUser)
+                .then((v) => {
+                let s = v;
+                if (s.length > 0) {
+                    this.user = new User();
+                    this.user.setAll(s[0]);
+                }
+            })
+                .catch((v) => {
+                console.log(v);
+            });
+            return this.user;
+        });
+    }
 }
+//# sourceMappingURL=CtUsers.js.map
