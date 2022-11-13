@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { IsFriendInListDB, GetHaveListFriendsByIdUserDB, SearchFirendsByIdDB, SearchFirendsByNameDB, } from "../database/DBHaveListFriends.js";
+import { IsFriendInListDB, GetHaveListFriendsByIdUserDB, SearchFirendsByIdDB, SearchFirendsByNameDB, insertListFriendsDB, CancelFriendsDB, } from "../database/DBHaveListFriends.js";
 import HaveListFriends from "../model/HaveListFriends.js";
 export default class CTHaveListFriends {
     constructor() {
@@ -23,7 +23,7 @@ export default class CTHaveListFriends {
             const element = rt[i];
             havelistfriends = new HaveListFriends();
             havelistfriends.setAll(element);
-            this.HaveListFriends.push(havelistfriends);
+            this.HaveListFriends.push(havelistfriends.json());
         }
     }
     GetHaveListFriendsByIdUser(idUser) {
@@ -34,7 +34,6 @@ export default class CTHaveListFriends {
                 this.HaveListFriends = [];
             })
                 .then((v) => {
-                console.log(v);
                 this.SetHaveListFriends(v);
             });
             return this.HaveListFriends;
@@ -66,7 +65,7 @@ export default class CTHaveListFriends {
             return this.HaveListFriends;
         });
     }
-    InFriendInList(idUser, idFriend) {
+    IsFriendInList(idUser, idFriend) {
         return __awaiter(this, void 0, void 0, function* () {
             var check = false;
             yield IsFriendInListDB(idUser, idFriend)
@@ -86,4 +85,32 @@ export default class CTHaveListFriends {
             return check;
         });
     }
+    insertListFriends(idUser, idFriend) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var s = false;
+            yield insertListFriendsDB(idUser, idFriend)
+                .catch((v) => {
+                console.log(v);
+            })
+                .then((v) => {
+                s = true;
+            });
+            return s;
+        });
+    }
+    CancelFriends(idUser, idFriend) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var s = true;
+            yield CancelFriendsDB(idUser, idFriend)
+                .catch((v) => {
+                s = false;
+                console.log(v);
+            })
+                .then((v) => {
+                s = true;
+            });
+            return s;
+        });
+    }
 }
+//# sourceMappingURL=CThaveLsitFriend.js.map

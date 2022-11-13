@@ -8,7 +8,7 @@ export const confi = {
     host: "localhost",
     user: "root",
     password: "",
-    database: "zalo",
+    database: "zalo2",
 };
 export function hash(params, length) {
     var salt = "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";

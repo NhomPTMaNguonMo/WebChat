@@ -45,7 +45,6 @@ export const SignIn = (props) => {
                 account:refAccount.current.value,
                 password:refPassword.current.value
             });
-            console.log(data)
             function postData(){
                 axios.post("http://localhost:666/account/sign",data,{
                     headers:
@@ -55,7 +54,7 @@ export const SignIn = (props) => {
                     }
                 })
                 .then((res)=>{
-                    console.log(res)
+                    console.log(res.data)
                     
                 })
             }

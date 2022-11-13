@@ -5,23 +5,27 @@ var status;
 })(status || (status = {}));
 export default class Validateuser {
     constructor() {
-        this.id = "";
+        this.time = 0;
+        this.id = 0;
         this.cookie = "";
         this.socket = "";
         this.status = 1;
+        this.ab = "";
     }
     setAll(p) {
-        this.cookie = p.cookie ? p.cookie : "";
-        this.id = p.id ? p.id : "";
-        this.socket = p.socket ? p.socket : "";
-        this.status = p.status ? p.status : "";
+        for (const key in this) {
+            this[key] = p[key];
+        }
     }
     Json() {
-        return {
-            id: this.id,
-            cookie: this.cookie,
-            socket: this.socket,
-            status: this.status
-        };
+        var s = {};
+        for (const key in this) {
+            const element = this[key];
+            if (element != undefined) {
+                s[key] = element;
+            }
+        }
+        return s;
     }
 }
+//# sourceMappingURL=Validateuser.js.map

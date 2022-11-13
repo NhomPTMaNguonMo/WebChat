@@ -7,10 +7,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { InAddFriendRequestDB } from "../database/DBAddFriendReques.js";
+import { CancelingFriendRequestDB, InAddFriendRequestDB, InsertAddFriendRequestDB, ListAddFriendRequestDB, ListSentFriendRequestDB, } from "../database/DBAddFriendReques.js";
+import AddFriendRequest from "../model/AddFriendRequest.js";
 export default class CTAddFriendReques {
     constructor() {
         this.addFriendsList = [];
+    }
+    refesh() {
+        this.addFriendsList = [];
+    }
+    setList(s) {
+        this.refesh();
+        let addFriendRequest;
+        for (let i = 0; i < s.length; i++) {
+            const element = s[i];
+            addFriendRequest = new AddFriendRequest();
+            addFriendRequest.setAll(element);
+            this.addFriendsList.push(addFriendRequest.json());
+        }
     }
     InAddFriendRequest(idUser, idAddFriends) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -35,7 +49,7 @@ export default class CTAddFriendReques {
     InsertAddFriendRequest(idUser, idAddFriends) {
         return __awaiter(this, void 0, void 0, function* () {
             var check = false;
-            yield InAddFriendRequestDB(idUser, idAddFriends)
+            yield InsertAddFriendRequestDB(idUser, idAddFriends)
                 .then((v) => {
                 check = true;
             })
@@ -45,4 +59,39 @@ export default class CTAddFriendReques {
             return check;
         });
     }
+    ListAddFriendRequest(idUser) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var s;
+            s = yield ListAddFriendRequestDB(idUser);
+            this.setList(s);
+            return this.addFriendsList;
+        });
+    }
+    CancelingFriendRequest(idFriendRequest, idUser) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var s = false;
+            yield CancelingFriendRequestDB(idFriendRequest, idUser)
+                .then((v) => {
+                s = true;
+            })
+                .catch((v) => {
+                console.log(v);
+                s = false;
+            });
+            return s;
+        });
+    }
+    ListSentFriendRequest(idUser) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield ListSentFriendRequestDB(idUser)
+                .then((v) => {
+                this.setList(v);
+            })
+                .catch((v) => {
+                console.log(v);
+            });
+            return this.addFriendsList;
+        });
+    }
 }
+//# sourceMappingURL=CTAddFriendReques.js.map
