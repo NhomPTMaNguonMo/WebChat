@@ -32,6 +32,9 @@ const io = new Server(server, {});
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res) => {
+    res.setHeader("access-control-allow-origin", "*");
+});
 export function Vali(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         if (validate(req)) {
