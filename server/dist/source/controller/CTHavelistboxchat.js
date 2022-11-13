@@ -87,6 +87,8 @@ export default class CTHavelistboxchat {
         return __awaiter(this, void 0, void 0, function* () {
             yield GetIdUserOnlineInBoxDB(idBox, idUser).then((v) => {
                 this.setlsBox(v);
+            }).catch((v) => {
+                console.log(v);
             });
             return this.listBox;
         });
@@ -122,3 +124,4 @@ export default class CTHavelistboxchat {
         });
     }
 }
+//# sourceMappingURL=CTHavelistboxchat.js.map

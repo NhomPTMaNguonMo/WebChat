@@ -40,18 +40,26 @@ export const SignIn = (props) => {
             setValPassword(true);
         }
         if(refAccount.current.value!=='' && refPassword.current.value!==''){
-            axios.post(`http://localhost:666/account/sign`,{
-                account: refAccount.current.value,
-                password: refPassword.current.value
-            },
-            {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                  }
-            }).then((response)=>{
-                console.log(response.status);
-            })
+            const formData = new FormData(e.target);
+            const data = JSON.stringify({
+                account:refAccount.current.value,
+                password:refPassword.current.value
+            });
+            console.log(data)
+            function postData(){
+                axios.post("http://localhost:666/account/sign",data,{
+                    headers:
+                        {
+                        Accept: '*/*',
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then((res)=>{
+                    console.log(res)
+                    
+                })
+            }
+            postData();
             
         }
         e.preventDefault();

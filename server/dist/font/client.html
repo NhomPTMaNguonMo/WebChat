@@ -8,23 +8,29 @@
     <title>Document</title>
 </head>
 <style>
-    .s {
-        width: 400px;
+    .re {
+        position: relative;
+    }
+    
+    .st {
+        top: 0;
+        left: 0;
+        position: sticky;
+        background-color: white;
+    }
+    
+    .root {
+        height: 200px;
     }
     
     .d {
         display: grid;
         grid-template-columns: auto auto auto;
     }
-    
-    .c {
-        overflow: scroll;
-        height: 640px;
-    }
 </style>
 
-<body>
-    <div id="root">
+<body class="re">
+    <div id="root" class="st root">
 
     </div>
     <br> <br>
@@ -121,6 +127,9 @@
     });
     socket.on("ReqAddFriends", (data) => {
         alert(data)
+    })
+    socket.on("receiveMess", (data) => {
+        alert(JSON.stringify(data))
     })
     var idBoxChat = document.getElementById("idBoxChat");
     var Content = document.getElementById("Content");

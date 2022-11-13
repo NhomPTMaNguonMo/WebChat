@@ -33,12 +33,9 @@ export default class ControllerUser{
         }
         return this.user
     }
-    async InsertNewUser(p:postRegister){
-        let user=new User();
+    async InsertNewUser(p:User){
         var err=false
-        user.setAll(p)
-        user.birthday=`${p.year}-${p.month}-${p.day}`
-        await InsertNewUserDB(user)
+        await InsertNewUserDB(p)
         .catch((v)=>{
             err=true
             console.log(v)

@@ -18,3 +18,4 @@ routeMess.post("/getAllContent", (req, res) => __awaiter(void 0, void 0, void 0,
     res.json({ err: true, list });
 }));
 export default routeMess;
+//# sourceMappingURL=message.js.map

@@ -40,11 +40,8 @@ export default class ControllerUser {
     }
     InsertNewUser(p) {
         return __awaiter(this, void 0, void 0, function* () {
-            let user = new User();
             var err = false;
-            user.setAll(p);
-            user.birthday = `${p.year}-${p.month}-${p.day}`;
-            yield InsertNewUserDB(user)
+            yield InsertNewUserDB(p)
                 .catch((v) => {
                 err = true;
                 console.log(v);
@@ -98,3 +95,4 @@ export default class ControllerUser {
         });
     }
 }
+//# sourceMappingURL=CtUsers.js.map

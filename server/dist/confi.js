@@ -1,6 +1,6 @@
 import { createHash } from "crypto";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 export default __dirname;
@@ -8,25 +8,16 @@ export const confi = {
     host: "localhost",
     user: "root",
     password: "",
-    database: "zalo2",
+    database: "zalo",
 };
-export function hash(params) {
-    return createHash("md5").update(params, "utf-8").digest("base64");
-}
-export function google() {
-    return {
-        web: {
-            client_id: "817413775067-rq5397mfi6jtpc3lnps5uam9ahelcgui.apps.googleusercontent.com",
-            project_id: "totemic-rig-362011",
-            auth_uri: "https://accounts.google.com/o/oauth2/auth",
-            token_uri: "https://oauth2.googleapis.com/token",
-            auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-            client_secret: "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",
-        },
-    };
+export function hash(params, length) {
+    var salt = "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";
+    return createHash("shake256", { outputLength: length ? length : 190 })
+        .update(params + salt, "utf-8")
+        .digest("base64url");
 }
 export function validateEmail(email) {
-    return email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    return (/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(email);
 }
 export function validatedate(day, month, year) {
     try {
@@ -78,3 +69,46 @@ export function formatDate(d) {
     var date = new Date(d);
     return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 }
+// (async function name() {
+//   http
+//     .request(
+//       {
+//         method: "GET",
+//         path: "/s",
+//         host: "localhost:666",
+//         hostname: "localhost",
+//         port: 666,
+//         headers: {
+//           cookies: "dasdas",
+//           connection: "keep-ave",
+//         },
+//       },
+//       (res) => {
+//         console.log(res.headers["set-cookie"]);
+//         res.on("data", (c) => {
+//           console.log(c.toString("utf8"));
+//         });
+//       }
+//     )
+//     .end();
+// });
+function equalDate(params) {
+    var now = new Date();
+    if (now.getDate() !== params.getDate()) {
+        return false;
+    }
+    return true;
+}
+export function validate(req) {
+    var sercurity = req.cookies;
+    var date = new Date(Number.parseInt(sercurity.time + ""));
+    if (!equalDate(date)) {
+        return false;
+    }
+    var tempAb = hash(sercurity.sercurity + sercurity.time, 25);
+    if (tempAb === sercurity.ab) {
+        return true;
+    }
+    return false;
+}
+//# sourceMappingURL=confi.js.map

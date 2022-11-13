@@ -77,7 +77,7 @@ export const SignUp = (props) => {
             <div>
             <div className="py-2 flex flex-wrap justify-center">
                     <input ref={refAccount} className="h-10 p-4 w-4/6 bg-slate-200" 
-                    type="text" name="username" id="" 
+                    type="text" name="username" 
                     autoComplete="off"
                     placeholder="Tên đăng nhập"
                     />
@@ -88,7 +88,7 @@ export const SignUp = (props) => {
                 </div>
                 <div className="py-2 flex flex-wrap justify-center">
                     <input ref={refUsername} className="h-10 p-4 w-4/6 bg-slate-200" 
-                    type="text" name="username" id="" 
+                    type="text" name="username" 
                     autoComplete="off"
                     placeholder="Tên người dùng"
                     />
@@ -125,20 +125,20 @@ export const SignUp = (props) => {
                     </div>}
                     <div className="flex justify-between w-4/6">
 
-                      <select className="w-1/4 rounded border-[1px] border-gray-700 outline-0	" 
-                            ref={refDay} name="day" id="">
+                      <select id="day" className="w-1/4 rounded border-[1px] border-gray-700 outline-0	" 
+                            ref={refDay} name="day">
                             {days.map((value)=>
                                 <option value={value}>{value}</option>
                         )}
                       </select>
-                      <select className="w-1/4 rounded border-[1px] border-gray-700 outline-0	" 
-                            ref={refMonth} name="month" id="">
+                      <select id="month" className="w-1/4 rounded border-[1px] border-gray-700 outline-0	" 
+                            ref={refMonth} name="month">
                             {months.map((value)=>
                                 <option value={value}>{value}</option>
                         )}
                       </select>
-                      <select className="w-1/4 rounded border-[1px] border-gray-700 outline-0	" 
-                            ref={refYear} name="year" id="">
+                      <select id="year" className="w-1/4 rounded border-[1px] border-gray-700 outline-0	" 
+                            ref={refYear} name="year">
                             {years.map((value)=>
                                 <option value={value}>{value}</option>
                         )}

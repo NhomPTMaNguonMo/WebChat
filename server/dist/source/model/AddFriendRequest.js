@@ -10,3 +10,4 @@ export default class AddFriendRequest extends User {
         super.setAll(d);
     }
 }
+//# sourceMappingURL=AddFriendRequest.js.map

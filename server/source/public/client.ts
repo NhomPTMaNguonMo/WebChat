@@ -4,7 +4,6 @@ function postData(url:string,params:{},cb:Function) {
         headers: {
             'Content-Type': 'application/json',
             //'Content-Type': 'application/x-www-form-urlencoded',
-            "Cookie": document.cookie
           },
         body:JSON.stringify(params)
     })

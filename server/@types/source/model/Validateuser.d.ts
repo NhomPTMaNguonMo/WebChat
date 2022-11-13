@@ -3,10 +3,12 @@ declare enum status {
     online = 1
 }
 export default class Validateuser {
-    id: string;
+    id: number;
     cookie: string;
     socket: string;
     status: status;
+    ab: string;
+    time: number;
     constructor();
     setAll(p: any): void;
     Json(): any;

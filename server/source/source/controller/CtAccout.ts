@@ -1,5 +1,5 @@
 import { result } from "../../confi.js";
-import { GetAccoutDatabase,InsertAccountDB} from "../database/DBAccount.js"
+import { GetAccoutDatabase,InsertAccountDB, UpdatePasswordDB} from "../database/DBAccount.js"
 import Account from "../model/Account.js";
 
 export default class ctAccout{
@@ -24,8 +24,6 @@ export default class ctAccout{
             console.log(v.result);
             this.rt=v;
         })
-       
-        
         for (let i = 0; i < this.rt.result.length; i++) {
             const element = this.rt.result[i];
             this.account =new Account()
@@ -46,5 +44,16 @@ export default class ctAccout{
         this.listAccount=[]
         this.account=undefined
     }
-    
+    async UpdatePassword(account: string, password: string){
+        var check=true;
+        await UpdatePasswordDB(account,password)
+        .then((v)=>{
+
+        })
+        .catch((v)=>{
+            console.log(v);
+            check=false
+        })
+        return check
+    }
 }

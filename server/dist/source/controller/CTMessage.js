@@ -42,7 +42,6 @@ export default class CTMessage {
         return __awaiter(this, void 0, void 0, function* () {
             yield InsertContentInDB(idBox, idUser, mess)
                 .then((v) => {
-                console.log(v);
             })
                 .catch((v) => {
                 console.log(v);
@@ -51,3 +50,4 @@ export default class CTMessage {
         });
     }
 }
+//# sourceMappingURL=CTMessage.js.map

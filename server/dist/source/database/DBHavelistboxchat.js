@@ -71,9 +71,10 @@ export function GetIdUserOnlineInBoxDB(idBox, idUser) {
             if (e) {
                 err(e.message);
             }
-            var sql = `SELECT * 
+            var sql = `SELECT h.idUser
       FROM havelistboxchat h, validateuser v
-      WHERE h.idUser NOT LIKE ? AND h.idBox LIKE ? AND h.idUser=v.id AND v.status >= 1`;
+      WHERE h.idUser NOT LIKE ? AND h.idBox LIKE ? AND h.idUser=v.id AND v.status >= 0
+      GROUP BY h.idUser`;
             con.query(sql, [idUser, idBox], (e, rt, fiels) => {
                 if (e) {
                     err(e.message);
@@ -111,7 +112,7 @@ export function SetNotSeenInBoxDB(idUser, idBox) {
             }
             var sql = `
       UPDATE havelistboxchat 
-      SET status=3
+      SET status = 2
       WHERE idUser NOT LIKE ? AND idBox LIKE ?`;
             con.query(sql, [idUser, idBox], (e, rt, fiels) => {
                 if (e) {
@@ -122,3 +123,4 @@ export function SetNotSeenInBoxDB(idUser, idBox) {
         });
     });
 }
+//# sourceMappingURL=DBHavelistboxchat.js.map

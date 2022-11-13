@@ -7,7 +7,7 @@ export function getAllBoxByIdInBD(idUser) {
             if (e) {
                 err(e.message);
             }
-            var sql = "SELECT hb2.idBox,hb2.idUser,us.nameUser,us.avatar,hb1.status FROM `havelistboxchat` hb1, `havelistboxchat` hb2, `user` us WHERE hb1.idUser= ? AND hb2.idUser <> ? AND hb1.idBox=hb2.idBox AND us.id=hb2.idUser AND hb1.status <> 0";
+            var sql = "SELECT hb2.idBox,hb2.idUser,us.nameUser,us.avatar,hb2.status FROM havelistboxchat hb1, havelistboxchat hb2, user us WHERE hb1.idUser= ? AND hb2.idUser <> ? AND hb1.idBox=hb2.idBox AND us.id=hb2.idUser AND hb1.status <> 0";
             con.query(sql, [idUser, idUser], (e, rt, fiels) => {
                 if (e) {
                     err(e.message);
@@ -68,3 +68,4 @@ export function GetEmptyBoxDB() {
         });
     });
 }
+//# sourceMappingURL=DBBox.js.map

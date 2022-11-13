@@ -6,8 +6,8 @@ var sex;
 })(sex || (sex = {}));
 export default class User {
     constructor() {
-        this.id = "";
-        this.accout = "";
+        this.id = 0;
+        this.account = "";
         this.nameUser = "";
         this.status = 0;
         this.avatar = "anh";
@@ -16,20 +16,30 @@ export default class User {
     }
     setAll(d) {
         for (const key in this) {
-            this[key] = d[key];
+            if (d[key] != undefined) {
+                this[key] = d[key];
+            }
+        }
+        if (d.year != undefined) {
+            this.birthday = `${d.year}-${d.month}-${d.day}`;
         }
     }
     json() {
         var s = {};
         for (const key in this) {
             const element = this[key];
-            if (element) {
+            if (element != undefined) {
                 s[key] = element;
             }
         }
+        s["account"] = undefined;
         if (s["birthday"]) {
             s["birthday"] = formatDate(s["birthday"]);
+        }
+        else {
+            s["birthday"] = undefined;
         }
         return s;
     }
 }
+//# sourceMappingURL=User.js.map

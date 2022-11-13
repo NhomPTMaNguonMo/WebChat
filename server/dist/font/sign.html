@@ -14,13 +14,20 @@
 </style>
 
 <body>
-    <a href="/account/register" class="c">đăng ký</a><br> <br>
+    <a href="/account/register" class="c">đăng ký </a><br> <br>
     <form action="/account/sign" method="post">
         <input type="text" name="account" placeholder="Tài Khoản" autocomplete="false" type="email">
         <input type="password" placeholder="Mật Khẩu" name="password" id="">
         <input type="submit" id="">
     </form>
-
+    <br><br><br><br>
+    <form action="/account/createCodeToChangeAccout" method="get">
+        <label for="account">
+            nhập email
+            <input type="text" placeholder="nhập email" name="account" required>
+        </label>
+        <input type="submit">
+    </form>
 </body>
 
 

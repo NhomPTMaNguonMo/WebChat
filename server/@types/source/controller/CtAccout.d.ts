@@ -8,4 +8,5 @@ export default class ctAccout {
     GetAccout(s: Account): Promise<Account | undefined>;
     InsertAccount(s: Account): Promise<result>;
     private Refesh;
+    UpdatePassword(account: string, password: string): Promise<boolean>;
 }

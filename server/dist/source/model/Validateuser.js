@@ -5,10 +5,12 @@ var status;
 })(status || (status = {}));
 export default class Validateuser {
     constructor() {
-        this.id = "";
+        this.time = 0;
+        this.id = 0;
         this.cookie = "";
         this.socket = "";
         this.status = 1;
+        this.ab = "";
     }
     setAll(p) {
         for (const key in this) {
@@ -19,10 +21,11 @@ export default class Validateuser {
         var s = {};
         for (const key in this) {
             const element = this[key];
-            if (element) {
+            if (element != undefined) {
                 s[key] = element;
             }
         }
         return s;
     }
 }
+//# sourceMappingURL=Validateuser.js.map

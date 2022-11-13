@@ -82,7 +82,7 @@ export async function ListSentFriendRequestDB(idUser:string) {
       if (err) {
         error(err);
       }
-      var sql ="SELECT u.nameUser, u.id,u.avatar,u.sex FROM listaddfriends l, user u WHERE l.idUser=1 AND u.id=l.idAddFriends";
+      var sql ="SELECT u.nameUser, u.id,u.avatar,u.sex FROM listaddfriends l, user u WHERE l.idUser = ? AND u.id=l.idAddFriends";
       con.query(sql,idUser, (e, ru, field) => {
         if (e) {
           error(e);

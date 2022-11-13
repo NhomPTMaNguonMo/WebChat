@@ -79,7 +79,10 @@ export default class CTHavelistboxchat {
   async GetIdUserOnlineInBox(idUser: string, idBox: string) {
     await GetIdUserOnlineInBoxDB(idBox, idUser).then((v: any) => {
       this.setlsBox(v);
-    });
+    }).catch((v)=>{
+      console.log(v);
+      
+    })
     return this.listBox;
   }
   async IsIdUserInBox(idUser: string, idBox: string) {

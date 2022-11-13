@@ -5,7 +5,6 @@ function postData(url, params, cb) {
         headers: {
             'Content-Type': 'application/json',
             //'Content-Type': 'application/x-www-form-urlencoded',
-            "Cookie": document.cookie
         },
         body: JSON.stringify(params)
     })
@@ -109,3 +108,4 @@ SubMitGetContentInBox === null || SubMitGetContentInBox === void 0 ? void 0 : Su
         render(data);
     });
 });
+//# sourceMappingURL=client.js.map

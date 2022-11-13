@@ -1,6 +1,6 @@
 export default class User {
-    id: string;
-    accout: string;
+    id: number;
+    account: string;
     nameUser: string;
     status: number;
     avatar: string;

@@ -94,3 +94,4 @@ export default class CTAddFriendReques {
         });
     }
 }
+//# sourceMappingURL=CTAddFriendReques.js.map

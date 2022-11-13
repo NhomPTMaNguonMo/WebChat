@@ -44,6 +44,11 @@ routeBox.post("/chat", (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.json({ err: true, mess: "bạn ko thể chat cho mình" });
         return;
     }
+    let user = yield ctUer.GetUserById(idFriend);
+    if (!user) {
+        res.json({ err: true, mess: "không có người này" });
+        return;
+    }
     let box;
     var li = yield ctHavelistboxchat.GetIdBoxbyIdUserAndIdFriend(s.id, idFriend);
     if (li.length > 0) {
@@ -53,11 +58,6 @@ routeBox.post("/chat", (req, res) => __awaiter(void 0, void 0, void 0, function*
             box: box.json(),
             listMess: listMess
         });
-        return;
-    }
-    let user = yield ctUer.GetUserById(idFriend);
-    if (!user) {
-        res.json({ err: true, mess: "không có người này" });
         return;
     }
     yield ctBox.insertNewBox();
@@ -84,3 +84,4 @@ routeBox.post("/chat", (req, res) => __awaiter(void 0, void 0, void 0, function*
     res.json({ err: false, box: box.json() });
 }));
 export default routeBox;
+//# sourceMappingURL=box.js.map

@@ -102,3 +102,4 @@ export function CancelFriendsDB(idUser, idFriend) {
         });
     });
 }
+//# sourceMappingURL=DBHaveListFriends.js.map

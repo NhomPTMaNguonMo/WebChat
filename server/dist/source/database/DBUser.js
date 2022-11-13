@@ -25,7 +25,7 @@ export function InsertNewUserDB(p) {
                 rej(e);
             }
             var sql = " INSERT INTO `user`( `account`, `nameUser`, `birthday`, `sex`,`avatar`) VALUES (?,?,?,?,?)";
-            con.query(sql, [p.accout, p.nameUser, p.birthday, p.sex, p.avatar], (e, rt, fi) => {
+            con.query(sql, [p.account, p.nameUser, p.birthday, p.sex, p.avatar], (e, rt, fi) => {
                 if (e) {
                     rej(e);
                 }
@@ -68,3 +68,4 @@ export function GetUserByIdDB(idUser) {
         });
     });
 }
+//# sourceMappingURL=DBUser.js.map
