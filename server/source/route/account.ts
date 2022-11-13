@@ -45,7 +45,7 @@ route.post("/sign", async (req: Request, res: Response) => {
   var account = new Account();
   account["setAll"](req.body);
   var err: boolean = false;
-
+  console.log(req.body)
   await Promise.all([
     ctAccout.GetAccout(account),
     ctUser.GetUser(account.getAccount()),
