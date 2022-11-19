@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import axiosClient from '../../axios/axiosClient';
 
@@ -16,16 +16,16 @@ export const SignIn = (props) => {
     const refPassword = useRef();
     const [valAccount,setValAccount]=useState(true);
     const [valPassword,setValPassword]=useState(true);
-    // const handleSignIn= async ()=>{
-    //     try{
-    //         const response = await axiosClient.post(`sign`);
-    //         const data = response.data;
-    //         console.log(data);
-    //     }
-    //     catch(err){
-    //         console.log(err)
-    //     }
-    // }
+    const postData= async (data)=>{
+        const response = await axios.post("/account/sign",data,{
+            headers:
+                {
+                Accept: '*/*',
+                "Content-Type": "application/json"
+            }
+        });
+        console.log(response.data)
+    }
     const handleSignIn=(e)=>{
         if(!refAccount.current.value){
             setValAccount(false);
@@ -39,30 +39,19 @@ export const SignIn = (props) => {
         else{
             setValPassword(true);
         }
-        if(refAccount.current.value!=='' && refPassword.current.value!==''){
-            const formData = new FormData(e.target);
+        if(valAccount && valPassword){
             const data = JSON.stringify({
                 account:refAccount.current.value,
                 password:refPassword.current.value
             });
-            function postData(){
-                axios.post("http://localhost:666/account/sign",data,{
-                    headers:
-                        {
-                        Accept: '*/*',
-                        "Content-Type": "application/json"
-                    }
-                })
-                .then((res)=>{
-                    console.log(res.data)
-                    
-                })
-            }
-            postData();
+            postData(data);
             
         }
         e.preventDefault();
     }
+    useEffect(()=>{
+        
+    },[])
   return (
     <div className="h-full w-full flex justify-center items-center">
         <form className="w-full" action="" method="post" onSubmit={handleSignIn}>
@@ -74,8 +63,10 @@ export const SignIn = (props) => {
                     type="text" name="account" id="" 
                     autoComplete="off"
                     placeholder="Tên đăng nhập"
+                    onChange={()=>refAccount.current.value=refAccount.current.value.trim(' ')}
                     />
-                    {valAccount?"":
+                    {valAccount?
+                    "":
                     <div className="error_mess text-start w-4/6">
                         * Chưa nhập tên đăng nhập    
                     </div>}
@@ -86,6 +77,7 @@ export const SignIn = (props) => {
                     type={!showPassword?"password":"text"} name="password"
                     autoComplete="off"
                     placeholder="Mật khẩu"
+                    onChange={()=>refPassword.current.value=refPassword.current.value.trim(' ')}
                     />
                     <span className="showPassword absolute top-[25%] right-[20%] cursor-pointer"
                         onClick={handleClickShowPassword}
