@@ -9,13 +9,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import express from "express";
 import CTMessage from "../source/controller/CTMessage.js";
+import CTHavelistboxchat from "../source/controller/CTHavelistboxchat.js";
+import CTHiddenMessList from "../source/controller/CTHiddenMessList.js";
+var ctHiddenMessList = new CTHiddenMessList();
+var ctHavelistboxchat = new CTHavelistboxchat();
 var ctMessage = new CTMessage();
 const routeMess = express.Router();
+// chưa test
 routeMess.post("/getAllContent", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var s = req.cookies;
     var idBox = req.body.idBox;
     let list = yield ctMessage.GetAllContentByidBox(idBox, s.id);
     res.json({ err: true, list });
+}));
+// chưa test
+routeMess.post("/hiddenMess", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var sercurity = req.cookies;
+    var idBox = req.body.idBox;
+    var idMess = req.body.idMess;
+    var s = yield Promise.all([
+        ctHavelistboxchat.IsIdUserInBox(sercurity.id, idBox),
+        ctMessage.IsMessInBox(idBox, idMess)
+    ]);
+    var check = false;
+    if (s[0] && s[1]) {
+        yield ctHiddenMessList.InsertHiddenMessToBox(sercurity.id, idMess);
+        check = true;
+    }
+    if (check) {
+        res.json({ mess: "thành công" });
+        return;
+    }
+    res.json({ mess: "thất bại" });
+}));
+// chưa test
+routeMess.post("/reMoveMess", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var sercurity = req.cookies;
+    var idMess = req.body.idMess;
+    yield ctHiddenMessList.DeleteHiddenMessbyIdUser(sercurity.id, idMess);
+    yield ctMessage.DeleteMessbyIdUser(sercurity.id, idMess);
+    res.json({ mess: "xóa thành công" });
 }));
 export default routeMess;
 //# sourceMappingURL=message.js.map

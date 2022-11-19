@@ -1,12 +1,14 @@
-import { UpdateBoxTypeDB } from "../database/DBBox.js"
+import entity from "./interface/entity.js"
 
-export default class Box{
+
+export default class Box extends entity{
     idBox:string
     idUser:number
     nameUser:string
     avatar:string
     status:string
     constructor(){
+        super()
         this.idBox=""
         this.idUser=0
         this.nameUser=""
@@ -15,19 +17,10 @@ export default class Box{
     }
     
     setAll(p:any){
-        for (const key in this) {
-            this[key] =p[key]
-        }
+       super.setAll(p)
     }
-    json():any{
-        var s:any={}
-        for (const key in this) {
-            const element=this[key]
-            if (element!=undefined) {
-                s[key]=element
-            }
-        }
-        return s
+    json(){
+        return super.json()
     }
     
 }

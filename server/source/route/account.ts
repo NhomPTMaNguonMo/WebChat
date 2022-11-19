@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import __dirname from "../confi.js";
+import __dirname, { clearCookie } from "../confi.js";
 import {
   hash,
   postRegister,
@@ -18,6 +18,8 @@ import CTAccout from "../source/controller/CtAccout.js";
 import CTtemporaryuser from "../source/controller/CTtemporaryuser.js";
 import GamiAPI from "../gmail.js";
 import temporaryuser from "../source/model/temporaryuser.js";
+import { Vali } from "../server.js";
+
 var ctAccout = new CTAccout();
 var ctUser = new ControllerUser();
 var ctvalidateuser = new CTvalidateuser();
@@ -44,12 +46,13 @@ route.post("/sign", async (req: Request, res: Response) => {
   var account = new Account();
   account["setAll"](req.body);
   var err: boolean = false;
-  console.log(req.body)
+  console.log(account.json())
   await Promise.all([
     ctAccout.GetAccout(account),
     ctUser.GetUser(account.getAccount()),
   ]).catch((v) => {
     err = true;
+    console.log(v);
   });
   if (err) {
     res.send("lỗi");
@@ -145,9 +148,8 @@ route.post("/register", async (req: Request, res: Response) => {
   cttemporaryuser.InsertNew(tem);
   res.status(200).json({ mess: "bạn đã đăng ký thành công hay kích hoạt đi" });
 });
-route.get("/logOut", async (req: Request, res: Response) => {
+route.get("/logOut",Vali, async (req: Request, res: Response) => {
   var sercurity: sercurity = req.cookies;
-  console.log(req.cookies);
 
   await ctvalidateuser
     .DeleteValidate(sercurity.id, sercurity.sercurity)
@@ -166,9 +168,7 @@ route.get("/logOutAll", async (req: Request, res: Response) => {
     return;
   }
   await ctvalidateuser.DeleteValidateAll(sercurity.id).catch((v) => {});
-  res.clearCookie("id");
-  res.clearCookie("sercurity");
-  res.clearCookie("ab");
+  clearCookie(res);
   res.redirect("/account/sign");
 });
 route.get("/ValidateAcc/:acc/:vali", async (req: Request, res: Response) => {
@@ -267,4 +267,41 @@ route.post("/ForgetAccout", async (req, res) => {
   res.json({mess:"đổi thành công"});
 });
 
+route.post("/ChangePassword",Vali,async(req,res)=>{
+  var sercurity:sercurity= req.cookies
+  var password:string=req.body.password
+  var password1:string=req.body.password1
+  var password2:string=req.body.password2
+  
+  if (password === password1) {
+    res.status(400).json({mess:"mật khẩu cũ trùng với mật khẩu mới"})
+    return
+  }
+
+  if (password1 !== password2) {
+    res.status(400).json({mess:"mật khẩu xác nhận không đúng"})
+    return
+  }
+
+  var account:Account|undefined = await ctAccout.GetAccoutById(sercurity.id)
+  if (account===undefined) {
+    res.status(400).json({mess:"tài khoản không tìm thấy"})
+    return
+  }
+  
+  if (account.getPassword()!== password) {
+    res.status(400).json({mess:"mật khẩu không trùng nhau"})
+    return
+  }
+
+  var check = await ctAccout.UpdatePassword(account.getAccount(),password1)
+  if (!check) {
+    res.status(400).json({mess:"mật khẩu không thay đổi"})
+    return
+  }
+  await ctvalidateuser.DeleteValidateAll(sercurity.id).catch((v) => {});
+  clearCookie(res)
+  
+  res.json({mess:"thành công"})
+})
 export default route;

@@ -1,10 +1,11 @@
 import { formatDate } from "../../confi.js";
+import entity from "./interface/entity.js";
 
 enum sex {
   nu = 0,
   nam,
 }
-export default class User {
+export default class User extends entity{
   id: number;
   account: string;
   nameUser: string;
@@ -13,6 +14,7 @@ export default class User {
   sex: string;
   birthday: string | undefined;
   constructor() {
+    super()
     this.id = 0;
     this.account = "";
     this.nameUser = "";
@@ -22,23 +24,13 @@ export default class User {
     this.sex = "";
   }
   setAll(d: any) {
-    for (const key in this) {
-      if (d[key] != undefined) {
-        this[key] = d[key];
-      }
-    }
+    super.setAll(d)
     if (d.year != undefined) {
       this.birthday= `${d.year}-${d.month}-${d.day}`
     }
   }
   json() {
-    var s: any = {};
-    for (const key in this) {
-      const element = this[key];
-      if (element != undefined) {
-        s[key] = element;
-      }
-    }
+    var s: any = super.json()
     s["account"]=undefined
     if (s["birthday"]) {
       s["birthday"] = formatDate(s["birthday"]);

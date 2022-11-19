@@ -14,7 +14,7 @@ export enum statusBox {
 
 export default class CTHavelistboxchat {
   listBox: Box[];
-
+  static user_idbox={};
   constructor() {
     this.listBox = [];
   }

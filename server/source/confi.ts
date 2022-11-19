@@ -2,8 +2,8 @@ import { createHash } from "crypto";
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
-import { Request } from "express";
-import http from "http";
+import { Request,Response } from "express";
+import dns  from "dns";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,7 +18,7 @@ export const confi = {
   host: "localhost",
   user: "root",
   password: "",
-  database: "zalo2",
+  database: "zalo",
 };
 
 export interface result {
@@ -161,4 +161,20 @@ export function validate(req: Request) {
     return true;
   }
   return false;
+}
+
+export function clearCookie(res:Response){
+  res.clearCookie("ab")
+  res.clearCookie("id")
+  res.clearCookie("sercurity")
+  res.clearCookie("time")
+}
+
+export function IP(port:number){
+  dns.lookupService("127.0.0.1",port,(err,hostname,service)=>{
+    dns.lookup(hostname,4,(err,address,family)=>{
+      console.log(`http://${address}:${port}`);
+    })
+  })
+  console.log(`http://localhost:${port}`);
 }

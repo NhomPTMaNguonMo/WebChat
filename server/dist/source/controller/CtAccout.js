@@ -24,6 +24,7 @@ export default class ctAccout {
             yield GetAccoutDatabase(s)
                 .then((v) => {
                 this.rt.result = v;
+                console.log(v);
             })
                 .catch((v) => {
                 console.log(v.result);
@@ -77,7 +78,7 @@ export default class ctAccout {
             yield GetAccoutByIdDB(id)
                 .then((v) => {
                 this.account = new Account();
-                this.account.setAll(v);
+                this.account.setAll(v[0]);
             })
                 .catch((v) => {
                 console.log(v);

@@ -1,14 +1,15 @@
-export default class Account{
+import entity from "./interface/entity.js";
+
+export default class Account extends entity{
     account:string
     password:string
     constructor(){
+        super()
         this.account="",
         this.password=""
     }
-    public setAll(d:any){
-        this.account=d.account?d.account:undefined
-        this.password=d.password?d.password:undefined
-        return this
+    public  setAll(d:any){
+       super.setAll(d)
     }
     public getAccount() : string {
         return this.account;
@@ -24,15 +25,6 @@ export default class Account{
         this.password = v;
     }
     public json(){
-        var s:any = {}
-        for (const key in this) {
-            if (Object.hasOwnProperty.call(this, key)) {
-                const element = this[key];
-                if (element!=undefined) {
-                    s[key] = this[key]
-                }
-
-            }
-        }
+        return super.json()
     }
 }

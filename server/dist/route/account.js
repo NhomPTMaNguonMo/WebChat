@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from "express";
-import __dirname from "../confi.js";
+import __dirname, { clearCookie } from "../confi.js";
 import { hash, UnknownObject, validatedate, validateEmail, } from "../confi.js";
 import Account from "../source/model/Account.js";
 import Validateuser from "../source/model/Validateuser.js";
@@ -19,6 +19,7 @@ import CTAccout from "../source/controller/CtAccout.js";
 import CTtemporaryuser from "../source/controller/CTtemporaryuser.js";
 import GamiAPI from "../gmail.js";
 import temporaryuser from "../source/model/temporaryuser.js";
+import { Vali } from "../server.js";
 var ctAccout = new CTAccout();
 var ctUser = new ControllerUser();
 var ctvalidateuser = new CTvalidateuser();
@@ -43,12 +44,13 @@ route.post("/sign", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     var account = new Account();
     account["setAll"](req.body);
     var err = false;
-    console.log(req.body);
+    console.log(account.json());
     yield Promise.all([
         ctAccout.GetAccout(account),
         ctUser.GetUser(account.getAccount()),
     ]).catch((v) => {
         err = true;
+        console.log(v);
     });
     if (err) {
         res.send("lỗi");
@@ -134,9 +136,8 @@ route.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function
     cttemporaryuser.InsertNew(tem);
     res.status(200).json({ mess: "bạn đã đăng ký thành công hay kích hoạt đi" });
 }));
-route.get("/logOut", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+route.get("/logOut", Vali, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var sercurity = req.cookies;
-    console.log(req.cookies);
     yield ctvalidateuser
         .DeleteValidate(sercurity.id, sercurity.sercurity)
         .catch((v) => { });
@@ -153,9 +154,7 @@ route.get("/logOutAll", (req, res) => __awaiter(void 0, void 0, void 0, function
         return;
     }
     yield ctvalidateuser.DeleteValidateAll(sercurity.id).catch((v) => { });
-    res.clearCookie("id");
-    res.clearCookie("sercurity");
-    res.clearCookie("ab");
+    clearCookie(res);
     res.redirect("/account/sign");
 }));
 route.get("/ValidateAcc/:acc/:vali", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -245,6 +244,37 @@ route.post("/ForgetAccout", (req, res) => __awaiter(void 0, void 0, void 0, func
     }
     var s = yield ctAccout.UpdatePassword(account, password1);
     res.json({ mess: "đổi thành công" });
+}));
+route.post("/ChangePassword", Vali, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var sercurity = req.cookies;
+    var password = req.body.password;
+    var password1 = req.body.password1;
+    var password2 = req.body.password2;
+    if (password === password1) {
+        res.status(400).json({ mess: "mật khẩu cũ trùng với mật khẩu mới" });
+        return;
+    }
+    if (password1 !== password2) {
+        res.status(400).json({ mess: "mật khẩu xác nhận không đúng" });
+        return;
+    }
+    var account = yield ctAccout.GetAccoutById(sercurity.id);
+    if (account === undefined) {
+        res.status(400).json({ mess: "tài khoản không tìm thấy" });
+        return;
+    }
+    if (account.getPassword() !== password) {
+        res.status(400).json({ mess: "mật khẩu không trùng nhau" });
+        return;
+    }
+    var check = yield ctAccout.UpdatePassword(account.getAccount(), password1);
+    if (!check) {
+        res.status(400).json({ mess: "mật khẩu không thay đổi" });
+        return;
+    }
+    yield ctvalidateuser.DeleteValidateAll(sercurity.id).catch((v) => { });
+    clearCookie(res);
+    res.json({ mess: "thành công" });
 }));
 export default route;
 //# sourceMappingURL=account.js.map

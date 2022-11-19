@@ -24,6 +24,7 @@ export default class ControllerUser {
             yield GetkUserDatabase(account)
                 .then((v) => {
                 this.rt.result = v;
+                console.log(v);
             })
                 .catch((v) => {
                 console.log(v.result);

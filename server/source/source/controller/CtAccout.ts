@@ -18,7 +18,7 @@ export default class ctAccout{
         await GetAccoutDatabase(s)
         .then((v)=>{
           this.rt.result=v
-        
+          console.log(v);
         })
         .catch((v:result)=>{
             console.log(v.result);
@@ -67,9 +67,9 @@ export default class ctAccout{
     async GetAccoutById(id:string){
        
         await GetAccoutByIdDB(id)
-        .then((v)=>{
+        .then((v :any)=>{
             this.account=new Account()
-            this.account.setAll(v)
+            this.account.setAll(v[0])
         })
         .catch((v)=>{
             console.log(v);

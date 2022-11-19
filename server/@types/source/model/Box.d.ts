@@ -1,4 +1,5 @@
-export default class Box {
+import entity from "./interface/entity.js";
+export default class Box extends entity {
     idBox: string;
     idUser: number;
     nameUser: string;

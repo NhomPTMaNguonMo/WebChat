@@ -1,5 +1,7 @@
-export default class Box {
+import entity from "./interface/entity.js";
+export default class Box extends entity {
     constructor() {
+        super();
         this.idBox = "";
         this.idUser = 0;
         this.nameUser = "";
@@ -7,19 +9,10 @@ export default class Box {
         this.status = "";
     }
     setAll(p) {
-        for (const key in this) {
-            this[key] = p[key];
-        }
+        super.setAll(p);
     }
     json() {
-        var s = {};
-        for (const key in this) {
-            const element = this[key];
-            if (element != undefined) {
-                s[key] = element;
-            }
-        }
-        return s;
+        return super.json();
     }
 }
 //# sourceMappingURL=Box.js.map

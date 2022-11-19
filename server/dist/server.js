@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import express from "express";
 import http from "http";
 import cookieParser from "cookie-parser";
-import __dirname, { hash, validate } from "./confi.js";
+import __dirname, { hash, IP, validate } from "./confi.js";
 import route from "./route/account.js";
 import routeFriends from "./route/friends.js";
 import routeBox from "./route/box.js";
@@ -37,12 +37,13 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
-function Vali(req, res, next) {
+export function Vali(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         if (validate(req)) {
             next();
             return;
         }
+        console.log("ok");
         var sercurity = req.cookies;
         var s = yield ctvalidateuser.GetValidateUser(sercurity.id, sercurity.sercurity);
         if (!s) {
@@ -86,7 +87,7 @@ app.use("/friends", Vali, routeFriends);
 app.use("/box", Vali, routeBox);
 app.use("/mess", Vali, routeMess);
 server.listen(port, () => {
-    console.log(`http://localhost:${port}`);
+    IP(port);
 });
 io.on("connection", (socket) => __awaiter(void 0, void 0, void 0, function* () {
     var cookie = parse(socket.handshake.headers.cookie ? socket.handshake.headers.cookie : "");

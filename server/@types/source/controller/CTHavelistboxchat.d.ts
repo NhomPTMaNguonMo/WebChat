@@ -5,6 +5,7 @@ export declare enum statusBox {
 }
 export default class CTHavelistboxchat {
     listBox: Box[];
+    static user_idbox: {};
     constructor();
     hiddenBoxChat(idUser: string, idBox: string): Promise<boolean>;
     GetIdBoxbyIdUserAndIdFriend(idUser: string, idFriend: string): Promise<Box[]>;

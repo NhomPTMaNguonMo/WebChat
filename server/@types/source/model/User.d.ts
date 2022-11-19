@@ -1,4 +1,5 @@
-export default class User {
+import entity from "./interface/entity.js";
+export default class User extends entity {
     id: number;
     account: string;
     nameUser: string;

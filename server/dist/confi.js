@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import dns from "dns";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 export default __dirname;
@@ -8,7 +9,7 @@ export const confi = {
     host: "localhost",
     user: "root",
     password: "",
-    database: "zalo2",
+    database: "zalo",
 };
 export function hash(params, length) {
     var salt = "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";
@@ -110,5 +111,19 @@ export function validate(req) {
         return true;
     }
     return false;
+}
+export function clearCookie(res) {
+    res.clearCookie("ab");
+    res.clearCookie("id");
+    res.clearCookie("sercurity");
+    res.clearCookie("time");
+}
+export function IP(port) {
+    dns.lookupService("127.0.0.1", port, (err, hostname, service) => {
+        dns.lookup(hostname, 4, (err, address, family) => {
+            console.log(`http://${address}:${port}`);
+        });
+    });
+    console.log(`http://localhost:${port}`);
 }
 //# sourceMappingURL=confi.js.map

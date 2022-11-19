@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import http from "http";
 import cookieParser from "cookie-parser";
-import __dirname, { content, hash, validate } from "./confi.js";
+import __dirname, { content, hash, IP, validate } from "./confi.js";
 
 import route from "./route/account.js";
 import routeFriends from "./route/friends.js";
@@ -35,11 +35,13 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
-async function Vali(req: Request, res: Response, next: NextFunction) {
+export async function Vali(req: Request, res: Response, next: NextFunction) {
   if (validate(req)) {
     next();
     return;
   }
+  console.log("ok");
+  
   var sercurity: sercurity = req.cookies;
   var s = await ctvalidateuser.GetValidateUser(
     sercurity.id,
@@ -92,7 +94,7 @@ app.use("/box", Vali, routeBox);
 app.use("/mess", Vali, routeMess);
 
 server.listen(port, () => {
-  console.log(`http://localhost:${port}`);
+  IP(port);
 });
 io.on("connection", async (socket) => {
   var cookie: sercurity | any = parse(

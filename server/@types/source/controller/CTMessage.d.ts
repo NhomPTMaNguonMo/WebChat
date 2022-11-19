@@ -6,4 +6,6 @@ export default class CTMessage {
     private Refesh;
     private setlsMess;
     InsertContentIn(idBox: string, idUser: string, mess: string): Promise<boolean>;
+    IsMessInBox(idBox: string, idMess: string): Promise<boolean>;
+    DeleteMessbyIdUser(idUser: string, idMess: string): Promise<boolean>;
 }

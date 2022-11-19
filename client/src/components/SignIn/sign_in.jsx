@@ -46,7 +46,7 @@ export const SignIn = (props) => {
                 password:refPassword.current.value
             });
             function postData(){
-                axios.post("http://localhost:666/account/sign",data,{
+                axios.post("/account/sign",data,{
                     headers:
                         {
                         Accept: '*/*',

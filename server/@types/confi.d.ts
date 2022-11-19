@@ -1,4 +1,4 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 declare const __dirname: string;
 export default __dirname;
 export interface sign {
@@ -41,3 +41,5 @@ export interface content {
 }
 export declare function formatDate(d: string): string;
 export declare function validate(req: Request): boolean;
+export declare function clearCookie(res: Response): void;
+export declare function IP(port: number): void;

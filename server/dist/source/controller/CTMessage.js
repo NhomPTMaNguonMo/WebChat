@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { GetAllContentByidBoxDB, InsertContentInDB, } from "../database/DBMessage.js";
+import { DeleteMessbyIdUserDB, GetAllContentByidBoxDB, InsertContentInDB, IsMessInBoxDB, } from "../database/DBMessage.js";
 import message from "../model/message.js";
 export default class CTMessage {
     constructor() {
@@ -44,6 +44,31 @@ export default class CTMessage {
                 .then((v) => {
             })
                 .catch((v) => {
+                console.log(v);
+            });
+            return true;
+        });
+    }
+    IsMessInBox(idBox, idMess) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var check = false;
+            yield IsMessInBoxDB(idBox, idMess)
+                .then((v) => {
+                if (v.length > 0) {
+                    check = true;
+                }
+            })
+                .catch((v) => {
+                console.log(v);
+            });
+            return check;
+        });
+    }
+    DeleteMessbyIdUser(idUser, idMess) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield DeleteMessbyIdUserDB(idUser, idMess)
+                .catch((v) => {
+                console.log("CTMessage.ts");
                 console.log(v);
             });
             return true;

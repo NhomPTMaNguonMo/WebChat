@@ -124,4 +124,5 @@ export default class CTHavelistboxchat {
         });
     }
 }
+CTHavelistboxchat.user_idbox = {};
 //# sourceMappingURL=CTHavelistboxchat.js.map

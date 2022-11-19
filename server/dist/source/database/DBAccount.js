@@ -66,7 +66,7 @@ export function GetAccoutByIdDB(id) {
             }
             var sql = `SELECT *
       from account
-      WHERE account IN (SELECT account FROM user WHERE user.id= ? )`;
+      WHERE account IN (SELECT account FROM user WHERE user.id = ? )`;
             con.query(sql, id, (e, ru, field) => {
                 if (e) {
                     error(e);
