@@ -16,16 +16,7 @@ export const SignIn = (props) => {
     const refPassword = useRef();
     const [valAccount,setValAccount]=useState(true);
     const [valPassword,setValPassword]=useState(true);
-    // const handleSignIn= async ()=>{
-    //     try{
-    //         const response = await axiosClient.post(`sign`);
-    //         const data = response.data;
-    //         console.log(data);
-    //     }
-    //     catch(err){
-    //         console.log(err)
-    //     }
-    // }
+    const [message,setMessage]=useState('');
     const handleSignIn=(e)=>{
         if(!refAccount.current.value){
             setValAccount(false);
@@ -40,7 +31,6 @@ export const SignIn = (props) => {
             setValPassword(true);
         }
         if(refAccount.current.value!=='' && refPassword.current.value!==''){
-            const formData = new FormData(e.target);
             const data = JSON.stringify({
                 account:refAccount.current.value,
                 password:refPassword.current.value
@@ -54,8 +44,9 @@ export const SignIn = (props) => {
                     }
                 })
                 .then((res)=>{
-                    console.log(res.data)
-                    
+                    if(res.data.err){
+                        setMessage(res.data.mess)
+                    }
                 })
             }
             postData();
@@ -70,14 +61,18 @@ export const SignIn = (props) => {
             {/* <p>or use your account</p> */}
             <div>
                 <div className="py-2 flex flex-wrap justify-center">
+            {!message?"":
+                    <div className="error_mess text-start w-4/6 pb-2">
+                        * {message}    
+                    </div>}
                     <input ref={refAccount} className="h-10 p-4 w-4/6 bg-slate-200" 
-                    type="text" name="account" id="" 
+                    type="email" name="account" id="" 
                     autoComplete="off"
-                    placeholder="Tên đăng nhập"
+                    placeholder="Email"
                     />
                     {valAccount?"":
                     <div className="error_mess text-start w-4/6">
-                        * Chưa nhập tên đăng nhập    
+                        * Chưa nhập Email    
                     </div>}
                 </div>
                 
