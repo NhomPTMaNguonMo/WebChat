@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
-
+import axios from 'axios';
 export const SignUp = (props) => {
   const [showPassword,setShowPassword]=useState(false);
   const handleClickShowPassword=()=>{
@@ -24,6 +24,8 @@ export const SignUp = (props) => {
   const [days,setDays]=useState([]);
   const [months,setMonths]=useState([]);
   const [years,setYears]=useState([]);
+  const [message,setMessage]=useState('');
+
   const currentYear = new Date().getFullYear();
   useEffect(()=>{
       for(let i=1;i<=31;i++){
@@ -38,7 +40,7 @@ export const SignUp = (props) => {
 
   },[])
   
-  const handleSignIn=(e)=>{
+  const handleSignUp=(e)=>{
       if(!refUsername.current.value){
           setValUsername(false);
       }
@@ -64,26 +66,52 @@ export const SignUp = (props) => {
         setValDate(false)
     }
     else{
-        console.log(date)
         setValDate(true)
+    }
+    if(refAccount.current.value!=='' && refPassword.current.value!=='' && refUsername.current.value!==''){
+        const data = JSON.stringify({
+            account:refAccount.current.value,
+            password:refPassword.current.value,
+            username:refUsername.current.value,
+            day:refDay.current.value,
+            month:refMonth.current.value,
+            year:refYear.current.value
+        });
+        function postData(){
+            axios.post("/account/register",data,{
+                headers:
+                    {
+                    Accept: '*/*',
+                    "Content-Type": "application/json"
+                }
+            })
+            .then((res)=>{
+                // if(res){
+                    setMessage(res.data.mess)
+                // }
+                console.log(message)
+            })
+        }
+        postData();
+        
     }
       e.preventDefault();
   }
   return (
     <div className="h-full w-full flex justify-center items-center">
-        <form className="w-full" action="" method="post" onSubmit={handleSignIn}>
+        <form className="w-full" action="" method="post" onSubmit={handleSignUp}>
             <h1 className="text-3xl font-bold mb-4">Đăng ký</h1>
             {/* <p>or use your account</p> */}
             <div>
             <div className="py-2 flex flex-wrap justify-center">
                     <input ref={refAccount} className="h-10 p-4 w-4/6 bg-slate-200" 
-                    type="text" name="username" 
+                    type="text" name="account" 
                     autoComplete="off"
-                    placeholder="Tên đăng nhập"
+                    placeholder="Email"
                     />
                     {valAccount?"":
                     <div className="error_mess text-start w-4/6">
-                        * Chưa nhập tên đăng nhập    
+                        * Chưa nhập Email    
                     </div>}
                 </div>
                 <div className="py-2 flex flex-wrap justify-center">
