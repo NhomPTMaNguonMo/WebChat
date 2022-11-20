@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { Request,Response } from "express";
 import dns  from "dns";
+console.log();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

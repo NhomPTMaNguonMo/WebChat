@@ -117,15 +117,16 @@ route.get("/register", (req: Request, res: Response) => {
 route.post("/register", async (req: Request, res: Response) => {
   var body: postRegister = req.body;
   await gamiAPI.loadAll();
+  
   if (!validatedate(body.day, body.month, body.year)) {
     res.json({ err: true, mess: "sai ngày tháng" });
     return;
   }
   let tem = new temporaryuser();
-  console.log(gamiAPI.getAccessToken());
+  console.log(body.account);
 
   tem.setAll(body);
-  tem.valiCode = hash(JSON.stringify(tem.json()) + gamiAPI.getAccessToken());
+  tem.valiCode = hash(JSON.stringify(tem.json()) + gamiAPI.getAccessToken(),7);
 
   var kq = await ctUser.GetUser(body.account);
   if (kq != undefined) {
@@ -139,7 +140,7 @@ route.post("/register", async (req: Request, res: Response) => {
     res.json({ mess: "hãy kiểm tra mail để kích hoạt" });
     return;
   }
-  var url = `http://localhost:666/account/ValidateAcc/${body.account}/${tem.valiCode}`;
+  var url = `${req.headers.origin}/account/ValidateAcc/${body.account}/${tem.valiCode}`;
   await gamiAPI.contentGmail(body.account, url).catch((v) => {
     console.log(v);
     return;
@@ -174,7 +175,7 @@ route.get("/logOutAll", async (req: Request, res: Response) => {
 route.get("/ValidateAcc/:acc/:vali", async (req: Request, res: Response) => {
   console.log(req.params);
   var s = cttemporaryuser.getTemporaryuser(req.params.acc);
-
+  cttemporaryuser.removeTemporaryuser(req.params.acc);
   if (s == undefined) {
     res.status(404).json({ mess: "tài khoản này chưa đăng ký" });
     return;
@@ -229,8 +230,8 @@ route.get("/createCodeToChangeAccout", async (req, res) => {
   }
   var tempuser = new temporaryuser();
 
-  var validateCode = hash(account + tempuser.CreatedTime.getTime(), 20);
-  var url = `http://localhost:666/account/ForgetAccout/${account}/${validateCode}`;
+  var validateCode = hash(account + tempuser.CreatedTime.getTime(), 7);
+  var url = `${req.headers.origin}/account/ForgetAccout/${account}/${validateCode}`;
   check = await gamiAPI.contentGmail(account, url);
   if (!check) {
     res.status(500).json({ mess: "lỗi hệ thống" });
@@ -272,6 +273,7 @@ route.post("/ChangePassword",Vali,async(req,res)=>{
   var password:string=req.body.password
   var password1:string=req.body.password1
   var password2:string=req.body.password2
+ 
   
   if (password === password1) {
     res.status(400).json({mess:"mật khẩu cũ trùng với mật khẩu mới"})

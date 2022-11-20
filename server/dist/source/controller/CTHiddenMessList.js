@@ -7,7 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { DeleteHiddenMessbyIdUserDB, InsertHiddenMessToBoxDB, } from "../database/DBHiddenMessList.js";
+import { DeleteHiddenMessbyIdUserDB, GetHiddenMessByIdMessAndIdUserDB, InsertHiddenMessToBoxDB, } from "../database/DBHiddenMessList.js";
+import HiddenMess from "../model/hiddenMess.js";
 export default class CTHiddenMessList {
     constructor() { }
     InsertHiddenMessToBox(idUser, idMess) {
@@ -24,6 +25,24 @@ export default class CTHiddenMessList {
                 console.log(v);
             });
             return true;
+        });
+    }
+    GetHiddenMessByIdMessAndIdUser(idUser, idMess) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var hiddenmess = undefined;
+            var s;
+            yield GetHiddenMessByIdMessAndIdUserDB(idUser, idMess)
+                .then((v) => {
+                s = v;
+            })
+                .catch((v) => {
+                s = undefined;
+            });
+            if (s != undefined && s.length > 0) {
+                hiddenmess = new HiddenMess();
+                hiddenmess.setAll(s[0]);
+            }
+            return hiddenmess;
         });
     }
 }

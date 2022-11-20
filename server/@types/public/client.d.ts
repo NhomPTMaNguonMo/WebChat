@@ -25,3 +25,4 @@ declare var SubMitGetContentInBox: HTMLElement | null;
 declare var password: HTMLInputElement;
 declare var password1: HTMLInputElement;
 declare var password2: HTMLInputElement;
+declare var idHiddenMess: HTMLInputElement;

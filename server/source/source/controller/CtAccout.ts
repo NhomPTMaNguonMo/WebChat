@@ -24,6 +24,7 @@ export default class ctAccout{
             console.log(v.result);
             this.rt=v;
         })
+        
         for (let i = 0; i < this.rt.result.length; i++) {
             const element = this.rt.result[i];
             this.account =new Account()

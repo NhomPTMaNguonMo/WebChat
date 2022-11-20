@@ -20,22 +20,14 @@ routeMess.post("/getAllContent", async (req: Request, res: Response) => {
 // chưa test
 routeMess.post("/hiddenMess",async(req,res)=>{
   var sercurity: sercurity = req.cookies;
-  var idBox=req.body.idBox;
   var idMess=req.body.idMess;
-  var s = await Promise.all([
-    ctHavelistboxchat.IsIdUserInBox(sercurity.id,idBox),
-    ctMessage.IsMessInBox(idBox,idMess)
-  ])
-  var check=false
-  if (s[0] && s[1]) {
+  var hiddenMess=await ctHiddenMessList.GetHiddenMessByIdMessAndIdUser(sercurity.id,idMess);
+  if (hiddenMess !== undefined) {
     await ctHiddenMessList.InsertHiddenMessToBox(sercurity.id,idMess)
-    check=true
-  }
-  if (check) {
     res.json({mess:"thành công"})
     return
   }
-  res.json({mess:"thất bại"})
+  res.status(400).json({mess:"thất bại"})
 });
 // chưa test
 routeMess.post("/reMoveMess",async(req,res)=>{

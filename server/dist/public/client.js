@@ -1,5 +1,5 @@
 "use strict";
-var _a;
+var _a, _b;
 function postData(url, params, cb) {
     fetch(url, {
         method: "POST",
@@ -132,7 +132,20 @@ var password2 = document.getElementById("password2");
         password1: password1 === null || password1 === void 0 ? void 0 : password1.value,
         password2: password2 === null || password2 === void 0 ? void 0 : password2.value,
     }, (res) => {
-        render(res.mess);
+        render(res);
+    });
+});
+// <div class="s">
+//                 <h1>Ẩn lới nhắn </h1>
+//                 <input type="text" placeholder="nhập mã số lới nhắn" id="idHiddenMess"><br>
+//                 <input type="submit" id="sbHiddenMess">
+//             </div>
+var idHiddenMess = document.getElementById("idHiddenMess");
+(_b = document.getElementById("sbHiddenMess")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => {
+    xml("/mess/hiddenMess", {
+        idMess: idHiddenMess.value
+    }, (res) => {
+        render(res);
     });
 });
 //# sourceMappingURL=client.js.map

@@ -181,8 +181,22 @@ document.getElementById("ChangePassword")?.addEventListener("click", () => {
       password1: password1?.value,
       password2: password2?.value,
     },
-    (res: any) => {
-      render(res.mess);
+    (res: string) => {
+      render(res);
     }
   );
 });
+
+// <div class="s">
+//                 <h1>Ẩn lới nhắn </h1>
+//                 <input type="text" placeholder="nhập mã số lới nhắn" id="idHiddenMess"><br>
+//                 <input type="submit" id="sbHiddenMess">
+//             </div>
+var idHiddenMess =<HTMLInputElement> document.getElementById("idHiddenMess");
+document.getElementById("sbHiddenMess")?.addEventListener("click", ()=>{
+  xml("/mess/hiddenMess",{
+    idMess:idHiddenMess.value
+  },(res:string)=>{
+    render(res)
+  })
+})

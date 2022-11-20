@@ -4,6 +4,7 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import SignUpPage from './pages/signup/';
 import PageNotFound from './pages/404';
 import Home from './pages/home/home';
+import React from 'react';
 function App() {
   return (
     <div className="App h-full">

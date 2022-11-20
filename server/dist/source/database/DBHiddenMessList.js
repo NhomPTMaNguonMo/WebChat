@@ -34,4 +34,23 @@ export function DeleteHiddenMessbyIdUserDB(idUser, idMess) {
         });
     });
 }
+export function GetHiddenMessByIdMessAndIdUserDB(idUser, idMess) {
+    return new Promise((res, rej) => {
+        var con = mysql.createConnection(confi);
+        con.connect((err) => {
+            if (err) {
+                if (err) {
+                    rej(err);
+                }
+            }
+            var sql = `SELECT * FROM hiddenmesslist WHERE idUser LIKE ? AND idMess LIKE ? `;
+            con.query(sql, [idUser, idMess], (err, rs, fiels) => {
+                if (err) {
+                    rej(err);
+                }
+                res(rs);
+            });
+        });
+    });
+}
 //# sourceMappingURL=DBHiddenMessList.js.map

@@ -36,3 +36,22 @@ export function DeleteHiddenMessbyIdUserDB(idUser:string,idMess:string){
         })
     })
 }
+export function GetHiddenMessByIdMessAndIdUserDB(idUser:string,idMess:string){
+    return new Promise((res,rej)=>{
+        var con=mysql.createConnection(confi);
+        con.connect((err)=>{
+            if (err) {
+                if (err) {
+                    rej(err)
+                }
+            }
+            var sql=`SELECT * FROM hiddenmesslist WHERE idUser LIKE ? AND idMess LIKE ? `
+            con.query(sql,[idUser,idMess],(err,rs,fiels)=>{
+                if (err) {
+                    rej(err)
+                }
+                res(rs);
+            })
+        })
+    })
+}
