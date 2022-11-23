@@ -88,7 +88,6 @@ route.post("/sign", async (req: Request, res: Response) => {
   await ctBox.getAllBoxByIdUser(validateuser.id + "");
   res.cookie("time", validateuser.time, {
     httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24,
   });
   res.cookie("id", ctUser.user.id, {
     maxAge: 1000 * 60 * 60 * 24 * 356,
@@ -98,6 +97,7 @@ route.post("/sign", async (req: Request, res: Response) => {
   });
   res.cookie("sercurity", validateuser.cookie, {
     httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 356,
   });
   res.json({
     err: false,

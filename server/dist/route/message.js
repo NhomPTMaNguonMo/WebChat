@@ -26,8 +26,11 @@ routeMess.post("/getAllContent", (req, res) => __awaiter(void 0, void 0, void 0,
 routeMess.post("/hiddenMess", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var sercurity = req.cookies;
     var idMess = req.body.idMess;
-    var hiddenMess = yield ctHiddenMessList.GetHiddenMessByIdMessAndIdUser(sercurity.id, idMess);
-    if (hiddenMess !== undefined) {
+    var s = yield Promise.all([
+        ctHiddenMessList.GetHiddenMessByIdMessAndIdUser(sercurity.id, idMess),
+        ctMessage.IsExistMess(idMess)
+    ]);
+    if (s[0] === undefined && s[1]) {
         yield ctHiddenMessList.InsertHiddenMessToBox(sercurity.id, idMess);
         res.json({ mess: "thành công" });
         return;

@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { DeleteMessbyIdUserDB, GetAllContentByidBoxDB, InsertContentInDB, IsMessInBoxDB, } from "../database/DBMessage.js";
+import { DeleteMessbyIdUserDB, GetAllContentByidBoxDB, InsertContentInDB, IsExistMessDB, } from "../database/DBMessage.js";
 import message from "../model/message.js";
 export default class CTMessage {
     constructor() {
@@ -49,10 +49,10 @@ export default class CTMessage {
             return true;
         });
     }
-    IsMessInBox(idBox, idMess) {
+    IsExistMess(idMess) {
         return __awaiter(this, void 0, void 0, function* () {
             var check = false;
-            yield IsMessInBoxDB(idBox, idMess)
+            yield IsExistMessDB(idMess)
                 .then((v) => {
                 if (v.length > 0) {
                     check = true;

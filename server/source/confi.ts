@@ -1,9 +1,9 @@
 import { createHash } from "crypto";
-
 import { fileURLToPath } from "url";
 import { dirname } from "path";
-import { Request,Response } from "express";
-import dns  from "dns";
+import { Request, Response } from "express";
+import dns from "dns";
+import mysql from "mysql";
 console.log();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,16 +28,16 @@ export interface result {
 }
 
 export function hash(params: string, length?: number) {
-  var salt="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"
+  var salt = "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";
   return createHash("shake256", { outputLength: length ? length : 190 })
-    .update(params+salt, "utf-8")
+    .update(params + salt, "utf-8")
     .digest("base64url");
 }
 
 export function validateEmail(email: string) {
-  return (
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  ).test(email);
+  return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+    email
+  );
 }
 
 export function validatedate(day: string, month: string, year: string) {
@@ -114,7 +114,6 @@ export function formatDate(d: string) {
   return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 }
 
-// (async function name() {
 //   http
 //     .request(
 //       {
@@ -149,33 +148,31 @@ function equalDate(params: Date) {
 export function validate(req: Request) {
   var sercurity: sercurity = req.cookies;
   var date = new Date(Number.parseInt(sercurity.time + ""));
-  
 
   if (!equalDate(date)) {
     return false;
   }
-  var tempAb = hash(
-    sercurity.sercurity + sercurity.time,
-    25
-  );
+  var tempAb = hash(sercurity.sercurity + sercurity.time, 25);
   if (tempAb === sercurity.ab) {
     return true;
   }
   return false;
 }
 
-export function clearCookie(res:Response){
-  res.clearCookie("ab")
-  res.clearCookie("id")
-  res.clearCookie("sercurity")
-  res.clearCookie("time")
+export function clearCookie(res: Response) {
+  res.clearCookie("ab");
+  res.clearCookie("id");
+  res.clearCookie("sercurity");
+  res.clearCookie("time");
 }
 
-export function IP(port:number){
-  dns.lookupService("127.0.0.1",port,(err,hostname,service)=>{
-    dns.lookup(hostname,4,(err,address,family)=>{
+export function IP(port: number) {
+  dns.lookupService("127.0.0.1", port, (err, hostname, service) => {
+    dns.lookup(hostname, 4, (err, address, family) => {
       console.log(`http://${address}:${port}`);
-    })
-  })
+    });
+  });
   console.log(`http://localhost:${port}`);
 }
+
+

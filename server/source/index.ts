@@ -1,6 +1,5 @@
 import fs from "fs"
 import path from "path";
-import process from "process";
 import {authenticate} from "@google-cloud/local-auth"
 import { google } from "googleapis";
 import __dirname from "./confi.js";

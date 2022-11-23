@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { DeleteHiddenMessbyIdUserDB, GetHiddenMessByIdMessAndIdUserDB, InsertHiddenMessToBoxDB, } from "../database/DBHiddenMessList.js";
-import HiddenMess from "../model/hiddenMess.js";
+import HiddenMess from "../model/HiddenMess.js";
 export default class CTHiddenMessList {
     constructor() { }
     InsertHiddenMessToBox(idUser, idMess) {

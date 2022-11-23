@@ -39,15 +39,15 @@ export function InsertContentInDB(idBox, idUser, mess) {
         });
     });
 }
-export function IsMessInBoxDB(idBox, idMess) {
+export function IsExistMessDB(idMess) {
     return new Promise((res, rej) => {
         var con = mysql.createConnection(confi);
         con.connect((err) => {
             if (err) {
                 rej(err);
             }
-            var sql = "SELECT * FROM messenge WHERE idBox LIKE ? AND idMess LIKE ?";
-            con.query(sql, [idBox, idMess], (err, rs, fiels) => {
+            var sql = "SELECT * FROM messenge WHERE idMess LIKE ?";
+            con.query(sql, [idMess], (err, rs, fiels) => {
                 if (err) {
                     rej(err);
                 }

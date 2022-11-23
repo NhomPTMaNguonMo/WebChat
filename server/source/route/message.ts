@@ -21,8 +21,12 @@ routeMess.post("/getAllContent", async (req: Request, res: Response) => {
 routeMess.post("/hiddenMess",async(req,res)=>{
   var sercurity: sercurity = req.cookies;
   var idMess=req.body.idMess;
-  var hiddenMess=await ctHiddenMessList.GetHiddenMessByIdMessAndIdUser(sercurity.id,idMess);
-  if (hiddenMess !== undefined) {
+
+  var s = await Promise.all([
+    ctHiddenMessList.GetHiddenMessByIdMessAndIdUser(sercurity.id,idMess),
+    ctMessage.IsExistMess(idMess)])
+
+  if (s[0]===undefined && s[1]) {
     await ctHiddenMessList.InsertHiddenMessToBox(sercurity.id,idMess)
     res.json({mess:"thành công"})
     return

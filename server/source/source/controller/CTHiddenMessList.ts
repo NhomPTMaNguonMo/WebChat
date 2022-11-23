@@ -3,7 +3,7 @@ import {
   GetHiddenMessByIdMessAndIdUserDB,
   InsertHiddenMessToBoxDB,
 } from "../database/DBHiddenMessList.js";
-import HiddenMess from "../model/hiddenMess.js";
+import HiddenMess from "../model/HiddenMess.js";
 
 export default class CTHiddenMessList {
   constructor() {}

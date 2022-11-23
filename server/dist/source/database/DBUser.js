@@ -68,4 +68,21 @@ export function GetUserByIdDB(idUser) {
         });
     });
 }
+export function GetUserLimitDB(index, limit) {
+    return new Promise((res, rej) => {
+        var con = mysql.createConnection(confi);
+        con.connect((err) => {
+            if (err) {
+                rej(err);
+            }
+            var sql = `select * from user u, account a where u.account=a.account  limit ?,?`;
+            con.query(sql, [index, limit], (err, result, fiels) => {
+                if (err) {
+                    rej(err);
+                }
+                res(result);
+            });
+        });
+    });
+}
 //# sourceMappingURL=DBUser.js.map

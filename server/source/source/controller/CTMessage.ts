@@ -2,7 +2,7 @@ import {
   DeleteMessbyIdUserDB,
   GetAllContentByidBoxDB,
   InsertContentInDB,
-  IsMessInBoxDB,
+  IsExistMessDB,
 } from "../database/DBMessage.js";
 import message from "../model/message.js";
 
@@ -44,9 +44,9 @@ export default class CTMessage {
       });
       return true;
   }
-  async IsMessInBox(idBox:string,idMess:string){
+  async IsExistMess(idMess:string){
     var check=false;
-    await IsMessInBoxDB(idBox,idMess)
+    await IsExistMessDB(idMess)
     .then((v : any)=>{
       if (v.length>0) {
         check=true

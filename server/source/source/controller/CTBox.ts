@@ -47,8 +47,6 @@ export default class CTBox {
       this.lsBox.push(box);
     }
   }
-
-  
   async UpdateBoxType(idBox: string, type: string){
     await UpdateBoxTypeDB(idBox,type)
     .catch((v)=>{

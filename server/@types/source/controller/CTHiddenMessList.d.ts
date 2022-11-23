@@ -1,4 +1,4 @@
-import HiddenMess from "../model/hiddenMess.js";
+import HiddenMess from "../model/HiddenMess.js";
 export default class CTHiddenMessList {
     constructor();
     InsertHiddenMessToBox(idUser: string, idMess: string): Promise<boolean>;

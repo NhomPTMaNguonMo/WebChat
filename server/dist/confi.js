@@ -19,7 +19,7 @@ export function hash(params, length) {
         .digest("base64url");
 }
 export function validateEmail(email) {
-    return (/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(email);
+    return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
 }
 export function validatedate(day, month, year) {
     try {
@@ -71,7 +71,6 @@ export function formatDate(d) {
     var date = new Date(d);
     return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 }
-// (async function name() {
 //   http
 //     .request(
 //       {

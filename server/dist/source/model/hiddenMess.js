@@ -10,4 +10,4 @@ export default class HiddenMess extends entity {
         return super.json();
     }
 }
-//# sourceMappingURL=hiddenMess.js.map
+//# sourceMappingURL=HiddenMess.js.map
