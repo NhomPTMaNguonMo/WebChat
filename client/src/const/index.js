@@ -1,0 +1,1 @@
+export const OPEN_INFO_USER="OPEN_INFO_USER";

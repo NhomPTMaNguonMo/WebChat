@@ -7,7 +7,7 @@ import Home from './pages/home/home';
 import React from 'react';
 function App() {
   return (
-    <div className="App h-full">
+    <div className="App h-full noselect">
       <BrowserRouter>
         <Routes path="/">
           <Route index element={<Home/>}/>
