@@ -19,7 +19,7 @@ export const confi = {
   host: "localhost",
   user: "root",
   password: "",
-  database: "zalo2",
+  database: "zalo",
 };
 
 export interface result {
