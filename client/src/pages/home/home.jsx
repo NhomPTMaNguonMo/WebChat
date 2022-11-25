@@ -7,7 +7,7 @@ import NavBar from '../../components/SideBar/nav_bar';
 export const Home = (props) => {
   return (
     <div className="h-full w-full">
-      <div className="w-[400px] h-full flex">
+      <div className="w-[410px] h-full flex">
         <MainTab openInfo={props.openInfo} userId={props.userId}/>
         <NavBar/>
       </div>
