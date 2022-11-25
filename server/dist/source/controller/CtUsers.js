@@ -7,13 +7,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { GetkUserDatabase, GetUserByIdDB, InsertNewUserDB, ListUserByNameDB } from "../database/DBUser.js";
+import { GetkUserDatabase, GetUserByIdDB, GetUserLimitDB, InsertNewUserDB, ListUserByNameDB, } from "../database/DBUser.js";
 import User from "../model/User.js";
 export default class ControllerUser {
     constructor() {
         this.rt = {
             err: false,
-            result: []
+            result: [],
         };
         this.listUser = [];
         this.user = undefined;
@@ -42,8 +42,7 @@ export default class ControllerUser {
     InsertNewUser(p) {
         return __awaiter(this, void 0, void 0, function* () {
             var err = false;
-            yield InsertNewUserDB(p)
-                .catch((v) => {
+            yield InsertNewUserDB(p).catch((v) => {
                 err = true;
                 console.log(v);
             });
@@ -94,6 +93,31 @@ export default class ControllerUser {
             });
             return this.user;
         });
+    }
+    GetUserLimit(index, limit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var s = yield GetUserLimitDB(index, limit);
+            if (s !== undefined && s.length > 0) {
+                this.setList(s);
+                return this.listUser;
+            }
+            else {
+                return undefined;
+            }
+        });
+    }
+    refesh() {
+        this.listUser = [];
+    }
+    setList(p) {
+        this.reFresh();
+        var u;
+        for (let i = 0; i < p.length; i++) {
+            const element = p[i];
+            u = new User();
+            u.setAll(element);
+            this.listUser.push(u);
+        }
     }
 }
 //# sourceMappingURL=CtUsers.js.map

@@ -85,4 +85,21 @@ export function GetUserLimitDB(index, limit) {
         });
     });
 }
+export function SumUserDB() {
+    return new Promise((res, rej) => {
+        var con = mysql.createConnection(confi);
+        con.connect((err) => {
+            if (err) {
+                rej(err);
+            }
+            var sql = `SELECT COUNT(*) FROM account;`;
+            con.query(sql, (err, result, fiels) => {
+                if (err) {
+                    rej(err);
+                }
+                res(result);
+            });
+        });
+    });
+}
 //# sourceMappingURL=DBUser.js.map
