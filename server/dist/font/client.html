@@ -154,7 +154,7 @@
     SumbMitSend.addEventListener("click", () => {
         let data = {
             idBox: idBoxChat.value,
-            content: Content.value
+            content: Content.value,
         }
         socket.emit("sendMess", data);
     })
