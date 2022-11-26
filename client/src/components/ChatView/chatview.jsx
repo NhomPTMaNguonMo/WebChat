@@ -29,6 +29,9 @@ export const ChatView = (props) => {
     props.socket.on("receiveMess", (data) => {
       fetchData(props.idBox);
     });
+    if(props.send){
+      fetchData(props.idBox);
+    }
     if (messagesEndRef) {
       messagesEndRef.current.addEventListener("DOMNodeInserted", (event) => {
         const { currentTarget: target } = event;
