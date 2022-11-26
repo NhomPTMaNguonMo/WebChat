@@ -32,6 +32,10 @@ routeFriends.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function*
 routeFriends.post("/search", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var nameUser = req.body.name;
     var s = req.cookies;
+    if (nameUser.length < 0) {
+        res.json({ mess: "chưa nhập" });
+        return;
+    }
     var listUser = [];
     var haveListFriends = [];
     yield Promise.all([

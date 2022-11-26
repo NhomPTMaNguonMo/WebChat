@@ -37,7 +37,10 @@ routeFriends.post("/", async (req: Request, res: Response) => {
 routeFriends.post("/search", async (req: Request, res: Response) => {
   var nameUser = req.body.name;
   var s: sercurity = req.cookies;
-
+  if (nameUser.length<0) {
+    res.json({mess:"chưa nhập"})
+    return;
+  }
   var listUser: User[] = [];
   var haveListFriends: HaveListFriends[] = [];
 
