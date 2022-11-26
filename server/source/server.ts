@@ -16,11 +16,11 @@ import { parse } from "cookie";
 import Ctvalidateuser from "./source/controller/Ctvalidateuser.js";
 import CTHavelistboxchat from "./source/controller/CTHavelistboxchat.js";
 import CTMessage from "./source/controller/CTMessage.js";
-
+import CTBox from "./source/controller/CTBox.js";
 var ctmessage = new CTMessage();
 var cthavelistboxchat = new CTHavelistboxchat();
 var ctvalidateuser = new Ctvalidateuser();
-
+var ctBox=new CTBox()
 var port = 666;
 const app: express.Express = express();
 const server = http.createServer(app);
@@ -139,6 +139,7 @@ io.on("connection", async (socket) => {
       cthavelistboxchat.visualBoxChat(cookie.id, data.idBox, "1"),
       cthavelistboxchat.SetNotSeenInBox(cookie.id, data.idBox),
       ctmessage.InsertContentIn(data.idBox, cookie.id, data.content),
+      ctBox.UpdateDateBox(data.idBox)
     ]);
     if (!v[0] && !v[2]) {
       socket.emit("ReqAddFriends", "lỗi");

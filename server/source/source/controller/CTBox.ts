@@ -1,15 +1,20 @@
-import { getAllBoxByIdInBD, GetEmptyBoxDB, insertNewBoxDB, UpdateBoxTypeDB } from "../database/DBBox.js";
+import {
+  getAllBoxByIdInBD,
+  GetEmptyBoxDB,
+  insertNewBoxDB,
+  UpdateBoxTypeDB,
+  UpdateDateBoxDB,
+} from "../database/DBBox.js";
 import Box from "../model/Box.js";
-enum type{
-  noFriend ="0",
-  Friend="1"
+enum type {
+  noFriend = "0",
+  Friend = "1",
 }
 export default class CTBox {
   lsBox: Box[];
 
-  
-   gettype() {
-    return type
+  gettype() {
+    return type;
   }
   constructor() {
     this.lsBox = [];
@@ -23,19 +28,17 @@ export default class CTBox {
         console.log(v);
       })
       .then((v) => {
-       
         this.setlsBox(v as []);
       });
     return true;
   }
-  async insertNewBox(){
-    await insertNewBoxDB()
-    .catch((v)=>{
-        console.log(v)
-    })
-    return true
+  async insertNewBox() {
+    await insertNewBoxDB().catch((v) => {
+      console.log(v);
+    });
+    return true;
   }
-  
+
   private setlsBox(any: []) {
     this.Refesh();
     this.lsBox = [];
@@ -47,18 +50,22 @@ export default class CTBox {
       this.lsBox.push(box);
     }
   }
-  async UpdateBoxType(idBox: string, type: string){
-    await UpdateBoxTypeDB(idBox,type)
-    .catch((v)=>{
-      console.log(v)
-    })
-    return true
+  async UpdateBoxType(idBox: string, type: string) {
+    await UpdateBoxTypeDB(idBox, type).catch((v) => {
+      console.log(v);
+    });
+    return true;
   }
-  async GetEmptyBox(){
-    await GetEmptyBoxDB()
-    .then((v)=>{
-      this.setlsBox(v as [])
-    })
-    return this.lsBox
+  async GetEmptyBox() {
+    await GetEmptyBoxDB().then((v) => {
+      this.setlsBox(v as []);
+    });
+    return this.lsBox;
+  }
+  async UpdateDateBox(idBox: string) {
+    await UpdateDateBoxDB(idBox).catch((v) => {
+      console.log(v);
+    });
+    return true;
   }
 }

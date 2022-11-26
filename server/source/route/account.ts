@@ -123,7 +123,6 @@ route.post("/register", async (req: Request, res: Response) => {
     return;
   }
   let tem = new temporaryuser();
-  console.log(body.account);
 
   tem.setAll(body);
   tem.valiCode = hash(JSON.stringify(tem.json()) + gamiAPI.getAccessToken(),7);
@@ -141,7 +140,8 @@ route.post("/register", async (req: Request, res: Response) => {
     return;
   }
   var url = `${req.headers.origin}/account/ValidateAcc/${body.account}/${tem.valiCode}`;
-  await gamiAPI.contentGmail(body.account, url).catch((v) => {
+  await gamiAPI.contentGmail(body.account, url)
+  .catch((v) => {
     console.log(v);
     return;
   });

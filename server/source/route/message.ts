@@ -4,6 +4,7 @@ import { sercurity } from "../confi.js";
 import CTMessage from "../source/controller/CTMessage.js";
 import CTHavelistboxchat from "../source/controller/CTHavelistboxchat.js";
 import CTHiddenMessList from "../source/controller/CTHiddenMessList.js";
+import Box from "../source/model/Box.js";
 
 var ctHiddenMessList=new CTHiddenMessList();
 var ctHavelistboxchat=new CTHavelistboxchat();
@@ -14,6 +15,7 @@ const routeMess = express.Router();
 routeMess.post("/getAllContent", async (req: Request, res: Response) => {
   var s: sercurity = req.cookies;
   var idBox = req.body.idBox;
+  await ctHavelistboxchat.visualBoxChat(s.id,idBox,"1");
   let list = await ctMessage.GetAllContentByidBox(idBox, s.id);
   res.json({ err: true, list });
 });
