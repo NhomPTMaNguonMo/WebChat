@@ -25,7 +25,12 @@ var port = 666;
 const app: express.Express = express();
 const server = http.createServer(app);
 app.use(express.static(__dirname + "/public"));
-const io = new Server(server, {});
+const io = new Server(server, {
+  cors:{
+    origin:"localhost:3000",
+    methods: ["GET", "POST"]
+  }
+});
 
 app.use(cookieParser());
 app.use(bodyParser.json());
