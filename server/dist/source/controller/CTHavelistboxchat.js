@@ -53,7 +53,7 @@ export default class CTHavelistboxchat {
             const element = any[i];
             box = new Box();
             box.setAll(element);
-            this.listBox.push(box.json());
+            this.listBox.push(box);
         }
     }
     Refesh() {

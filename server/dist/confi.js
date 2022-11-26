@@ -117,6 +117,8 @@ export function clearCookie(res) {
     res.clearCookie("id");
     res.clearCookie("sercurity");
     res.clearCookie("time");
+    res.clearCookie("a");
+    res.clearCookie("b");
 }
 export function IP(port) {
     dns.lookupService("127.0.0.1", port, (err, hostname, service) => {

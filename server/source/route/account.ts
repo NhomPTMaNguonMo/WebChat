@@ -155,8 +155,7 @@ route.get("/logOut",Vali, async (req: Request, res: Response) => {
   await ctvalidateuser
     .DeleteValidate(sercurity.id, sercurity.sercurity)
     .catch((v) => {});
-  res.clearCookie("id");
-  res.clearCookie("sercurity");
+  clearCookie(res);
   res.redirect("/account/sign");
 });
 route.get("/logOutAll", async (req: Request, res: Response) => {

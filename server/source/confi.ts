@@ -164,6 +164,8 @@ export function clearCookie(res: Response) {
   res.clearCookie("id");
   res.clearCookie("sercurity");
   res.clearCookie("time");
+  res.clearCookie("a")
+  res.clearCookie("b",)
 }
 
 export function IP(port: number) {
@@ -173,6 +175,12 @@ export function IP(port: number) {
     });
   });
   console.log(`http://localhost:${port}`);
+}
+
+export interface cookieAdmin{
+  time:number,
+  a:string,
+  b:string
 }
 
 

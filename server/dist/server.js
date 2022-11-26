@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import express from "express";
 import http from "http";
 import cookieParser from "cookie-parser";
-import __dirname, { hash, IP, validate } from "./confi.js";
+import __dirname, { clearCookie, hash, IP, validate } from "./confi.js";
 import route from "./route/account.js";
 import routeFriends from "./route/friends.js";
 import routeBox from "./route/box.js";
@@ -43,10 +43,10 @@ export function Vali(req, res, next) {
             next();
             return;
         }
-        console.log("ok");
         var sercurity = req.cookies;
         var s = yield ctvalidateuser.GetValidateUser(sercurity.id, sercurity.sercurity);
         if (!s) {
+            clearCookie(res);
             res.status(402).end();
             return;
         }

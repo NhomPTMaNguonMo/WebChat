@@ -54,9 +54,8 @@ routeBox.post("/chat", (req, res) => __awaiter(void 0, void 0, void 0, function*
     if (li.length > 0) {
         box = li[0];
         let listMess = yield ctMessage.GetAllContentByidBox(box.idBox, s.id);
-        console.log(box.json);
         res.json({
-            box: box.json,
+            box: box.json(),
             listMess: listMess
         });
         return;

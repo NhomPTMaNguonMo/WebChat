@@ -141,8 +141,7 @@ route.get("/logOut", Vali, (req, res) => __awaiter(void 0, void 0, void 0, funct
     yield ctvalidateuser
         .DeleteValidate(sercurity.id, sercurity.sercurity)
         .catch((v) => { });
-    res.clearCookie("id");
-    res.clearCookie("sercurity");
+    clearCookie(res);
     res.redirect("/account/sign");
 }));
 route.get("/logOutAll", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

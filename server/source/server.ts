@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import http from "http";
 import cookieParser from "cookie-parser";
-import __dirname, { content, hash, IP, validate } from "./confi.js";
+import __dirname, { clearCookie, content, hash, IP, validate } from "./confi.js";
 
 import route from "./route/account.js";
 import routeFriends from "./route/friends.js";
@@ -40,14 +40,13 @@ export async function Vali(req: Request, res: Response, next: NextFunction) {
     next();
     return;
   }
-  console.log("ok");
-  
   var sercurity: sercurity = req.cookies;
   var s = await ctvalidateuser.GetValidateUser(
     sercurity.id,
     sercurity.sercurity
   );
   if (!s) {
+    clearCookie(res);
     res.status(402).end();
     return;
   }

@@ -43,3 +43,8 @@ export declare function formatDate(d: string): string;
 export declare function validate(req: Request): boolean;
 export declare function clearCookie(res: Response): void;
 export declare function IP(port: number): void;
+export interface cookieAdmin {
+    time: number;
+    a: string;
+    b: string;
+}

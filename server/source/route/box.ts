@@ -55,10 +55,8 @@ routeBox.post("/chat", async (req: Request, res: Response) => {
   if (li.length>0) {
     box=li[0]
     let listMess:message[]=await ctMessage.GetAllContentByidBox(box.idBox,s.id)
-    console.log(box.json);
-    
     res.json({
-      box:box.json,
+      box:box.json(),
       listMess:listMess
     })
     return
