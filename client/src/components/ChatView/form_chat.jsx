@@ -2,6 +2,9 @@ import React,{useRef,useEffect} from 'react'
 import { connect } from 'react-redux'
 import {sendChatBox} from '../../actions/index.js'
 export const FormChat = (props) => {
+  const createBoxChat=(id)=>{
+    
+  }
   const refInput = useRef();
   return (
     <div className="w-full h-[10%] px-4">

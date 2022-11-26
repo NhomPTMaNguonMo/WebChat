@@ -157,7 +157,8 @@ route.get("/logOut",Vali, async (req: Request, res: Response) => {
     .catch((v) => {});
   res.clearCookie("id");
   res.clearCookie("sercurity");
-  res.redirect("/account/sign");
+  // res.redirect("/account/sign");
+  res.json({err:false})
 });
 route.get("/logOutAll", async (req: Request, res: Response) => {
   var sercurity: sercurity = req.cookies;

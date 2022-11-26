@@ -1,13 +1,28 @@
-import React, { useRef, useState } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import InfoUser from "../InfoUser/info_user";
-
+import { useNavigate } from "react-router";
 export const MainTab = (props) => {
   const [active, setActive] = useState("message");
+  const [isLogout, setIsLogout] = useState(false);
+
+  const navigator = useNavigate();
   const refInfo = useRef();
   document.body.addEventListener("click", () => {
     refInfo.current.style.display = "none";
   });
+  const handleLogOut=async()=>{
+    const response = await axios.get('/account/logOut');
+    if(!response.data.err){
+      setIsLogout(true);
+    }
+  }
+  useEffect(()=>{
+    if(isLogout){
+      navigator("/signin")
+    }
+  },[isLogout])
   return (
     <div className="w-[65px] h-full bg-blue-600  pt-6 relative">
       {props.userId ? <InfoUser openInfo={props.openInfo} /> : ""}
@@ -50,7 +65,10 @@ export const MainTab = (props) => {
         <div
           className="w-full py-1 h-10 border-t 
              cursor-pointer "
-          onClick={() => {}}
+            onClick={()=>{
+              handleLogOut();
+            }}
+          
         >
           <div className="hover:bg-zinc-100 w-full px-3 h-full flex items-center">
             Đăng xuất

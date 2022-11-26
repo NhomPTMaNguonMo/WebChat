@@ -51,7 +51,7 @@ export const ChatView = (props) => {
                       {index == 0 ? (
                         allMess[index].idUser == item.idUser ? (
                           <img
-                            className="w-[45px] h-[45px] rounded-full"
+                            className="w-[45px] h-[45px] rounded-full bg-white"
                             src={
                               user.avatar !== "anh" ? user.avatar : "/user.png"
                             }
@@ -62,7 +62,7 @@ export const ChatView = (props) => {
                         )
                       ) : allMess[index - 1].idUser != item.idUser ? (
                         <img
-                          className="w-[45px] h-[45px] rounded-full"
+                          className="w-[45px] h-[45px] rounded-full bg-white"
                           src={
                             user.avatar !== "anh" ? user.avatar : "/user.png"
                           }
@@ -91,7 +91,7 @@ export const ChatView = (props) => {
                       {index == 0 ? (
                         allMess[index].idUser == item.idUser ? (
                           <img
-                            className="w-[45px] h-[45px] rounded-full"
+                            className="w-[45px] h-[45px] rounded-full bg-white"
                             src={
                               user.avatar !== "anh" ? user.avatar : "/user.png"
                             }
@@ -102,7 +102,7 @@ export const ChatView = (props) => {
                         )
                       ) : allMess[index - 1].idUser != item.idUser ? (
                         <img
-                          className="w-[45px] h-[45px] rounded-full"
+                          className="w-[45px] h-[45px] rounded-full bg-white"
                           src={
                             user.avatar !== "anh" ? user.avatar : "/user.png"
                           }
@@ -117,7 +117,7 @@ export const ChatView = (props) => {
               </div>
             );
           })
-        : "sad"}
+        : ""}
     </div>
   );
 };

@@ -5,16 +5,23 @@ import { openChatBox, openInfoUser } from '../../actions';
 import NavBar from '../../components/SideBar/nav_bar';
 import { ChatViewContainer } from '../../components/ChatView/chatview_container';
 import io from 'socket.io-client'
-
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router';
 export const Home = (props) => {
-
+  const [uid,setUid]=useCookies('id');
+  const [sercurity,setSercurity]=useCookies('sercurity');
+  const navigator=useNavigate();
   const [chat,setChat]=useState({});
   const socket = io();
   useEffect(()=>{
+    if(!uid.id && !sercurity.sercurity){
+      navigator("/signin")
+    }
       socket.on("connect", () => {
       console.log(socket.id);
   })
-  },[])
+
+  },[uid])
 
   return (
     <div className="h-full w-full flex">

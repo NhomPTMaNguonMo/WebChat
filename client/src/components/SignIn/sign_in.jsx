@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useRef, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux'
 
 export const SignIn = (props) => {
     const [showPassword,setShowPassword]=useState(false);
+    const navigate = useNavigate();
     const handleClickShowPassword=()=>{
         if(showPassword){
             setShowPassword(false);
@@ -46,6 +48,10 @@ export const SignIn = (props) => {
                     if(res.data.err){
                         setMessage(res.data.mess)
                     }
+                    else{
+                        navigate("/");
+
+                    }
                 })
             }
             postData();
@@ -65,7 +71,7 @@ export const SignIn = (props) => {
                         * {message}    
                     </div>}
                     <input ref={refAccount} className="h-10 p-4 w-4/6 bg-slate-200" 
-                    type="email" name="account" id="" 
+                    type="text" name="account" id="" 
                     autoComplete="off"
                     placeholder="Email"
                     />

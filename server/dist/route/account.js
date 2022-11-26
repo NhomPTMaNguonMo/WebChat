@@ -143,7 +143,8 @@ route.get("/logOut", Vali, (req, res) => __awaiter(void 0, void 0, void 0, funct
         .catch((v) => { });
     res.clearCookie("id");
     res.clearCookie("sercurity");
-    res.redirect("/account/sign");
+    // res.redirect("/account/sign");
+    res.json({ err: false });
 }));
 route.get("/logOutAll", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var sercurity = req.cookies;
